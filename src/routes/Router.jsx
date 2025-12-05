@@ -7,6 +7,9 @@ import Login from '../pages/Auth/Login/Login';
 import Register from '../pages/Auth/Register/Register';
 import DashboardLayout from '../layouts/DashboardLayout';
 import DashboardHome from '../pages/Dashboard/DashboardContent/DashboardContent';
+import AboutUs from '../pages/OtherPages/AboutUs';
+import Contact from '../pages/OtherPages/Contact';
+import AllProducts from '../pages/AllProducts/AllProducts';
 
 export const router = createBrowserRouter([
   {
@@ -17,6 +20,18 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Home></Home>,
+      },
+      {
+        path: 'all-products',
+        element: <AllProducts></AllProducts>,
+      },
+      {
+        path: 'about-us',
+        element: <AboutUs></AboutUs>,
+      },
+      {
+        path: 'contact',
+        element: <Contact></Contact>,
       },
     ],
   },
