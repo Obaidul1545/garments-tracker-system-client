@@ -4,8 +4,12 @@ import { Link } from 'react-router';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import { FiEyeOff } from 'react-icons/fi';
 import { BsEye } from 'react-icons/bs';
+import useAuth from '../../../hooks/useAuth';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const Register = () => {
+  const { registerUser, updateUser, setLoading } = useAuth();
   const {
     register,
     handleSubmit,
@@ -13,15 +17,50 @@ const Register = () => {
   } = useForm();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [regLoading, setRegLoading] = useState(false);
 
   const handleRegister = async (data) => {
-    setLoading(true);
+    setRegLoading(true);
+    const profileImg = data.photo[0];
 
-    // Submit to backend
-    console.log(data);
+    registerUser(data.email, data.password)
+      .then((result) => {
+        const formData = new FormData();
+        formData.append('image', profileImg);
+        const imageApiUrl = `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_IMAGE_HOST_KEY
+        }`;
+        axios.post(imageApiUrl, formData).then((res) => {
+          const photoURL = res.data.data.url;
+          const userInfo = {
+            email: data.email,
+            displayName: data.name,
+            photoURL: photoURL,
+          };
+          // database
 
-    setLoading(false);
+          // update
+          const userProfile = {
+            displayName: data.name,
+            photoURL: photoURL,
+          };
+          updateUser(userProfile)
+            .then(() => {
+              console.log('update user done');
+              setLoading(false);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        });
+        toast.success('success');
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error('error');
+      });
+
+    setRegLoading(false);
   };
 
   return (
@@ -181,10 +220,10 @@ const Register = () => {
 
               <button
                 type="submit"
-                disabled={loading}
+                disabled={regLoading}
                 className="btn bg-teal-600 hover:bg-teal-700 text-white w-full rounded-md"
               >
-                {loading ? 'Creating Account...' : 'Register'}
+                {regLoading ? 'Creating Account...' : 'Register'}
               </button>
             </form>
 
