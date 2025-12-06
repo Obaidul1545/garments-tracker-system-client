@@ -4,7 +4,7 @@ import { Outlet } from 'react-router';
 const DashboardLayout = () => {
   // Outlet hobe
   return (
-    <div>
+    <div className="bg-[#E2E8F0]">
       <Outlet></Outlet>
     </div>
   );

@@ -8,13 +8,7 @@ const NotFound = () => {
     <div className="min-h-screen bg-linear-to-br from-[#0D9488] to-[#0F172A] flex items-center justify-center px-4">
       <div className="text-center max-w-2xl">
         <div className="mb-8">
-          <div
-            transition={{ delay: 0.2, type: 'spring' }}
-            className="text-white mb-4"
-            style={{ fontSize: '120px', lineHeight: 1 }}
-          >
-            404
-          </div>
+          <div className="text-white mb-4 text-9xl">404</div>
           <h1 className="text-white mb-4">Page Not Found</h1>
           <p className="text-gray-200 mb-8">
             Oops! The page you&apos;re looking for doesn&apos;t exist. It might

@@ -4,10 +4,16 @@ import Footer from '../components/Footer';
 
 const RootLayout = () => {
   return (
-    <div>
-      <Navbar></Navbar>
-      <Outlet></Outlet>
-      <Footer></Footer>
+    <div className="flex flex-col min-h-screen bg-[#E2E8F0]">
+      <header className="sticky top-0 z-50">
+        <Navbar></Navbar>
+      </header>
+      <main className="grow">
+        <Outlet></Outlet>
+      </main>
+      <footer>
+        <Footer></Footer>
+      </footer>
     </div>
   );
 };

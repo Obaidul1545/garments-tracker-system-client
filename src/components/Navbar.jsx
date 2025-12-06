@@ -37,7 +37,7 @@ const Navbar = () => {
             className="w-8 h-8 rounded-full object-cover border-2 border-[#0D9488]"
           /> */}
         </Link>
-        <button className="flex items-center gap-2 px-4 py-2 bg-[#0D9488] text-white rounded-xl hover:bg-[#0D9488]/90 transition-colors">
+        <button className="flex items-center gap-2 px-4 py-2 bg-[#0D9488] text-white rounded-md hover:bg-[#0D9488]/90 transition-colors">
           <MdLogout size={16} />
           Logout
         </button>
@@ -50,7 +50,7 @@ const Navbar = () => {
       </Link>
       <Link
         to="/auth/register"
-        className="px-4 py-2 bg-[#0D9488] text-white rounded-xl hover:bg-[#0D9488]/90 transition-colors"
+        className="px-4 py-2 bg-[#0D9488] text-white rounded-md hover:bg-[#0D9488]/90 transition-colors"
       >
         Register
       </Link>
@@ -58,8 +58,8 @@ const Navbar = () => {
   );
 
   return (
-    <div>
-      <div className="navbar bg-base-100 shadow-sm">
+    <div className=" bg-base-100 shadow-sm">
+      <div className="navbar container mx-auto p-0">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -86,7 +86,7 @@ const Navbar = () => {
               {links}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">daisyUI</a>
+          <a className="btn btn-ghost text-xl ">daisyUI</a>
         </div>
         <div className="navbar-end hidden lg:flex">
           <ul className="menu menu-horizontal px-1 flex items-center gap-2">
