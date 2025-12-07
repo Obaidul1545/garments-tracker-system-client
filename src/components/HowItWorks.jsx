@@ -1,17 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import {
-  ShoppingBag,
-  Package,
-  TrendingUp,
-  CheckCircle,
-  Users,
-  Star,
-  ArrowRight,
-  Factory,
-  Truck,
-  ClipboardCheck,
-} from 'lucide-react';
+import { ShoppingBag, Package, Factory, Truck } from 'lucide-react';
 
 const HowItWorks = () => {
   const steps = [
@@ -49,7 +38,9 @@ const HowItWorks = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-[#0F172A] text-3xl mb-4">How It Works</h2>
+            <h2 className="text-[#0F172A] text-3xl font-semibold mb-4">
+              How It Works
+            </h2>
             <p className="text-[#475569] max-w-2xl mx-auto">
               Simple steps to get your garments from production to delivery
             </p>

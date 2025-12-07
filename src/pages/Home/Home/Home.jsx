@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import HowItWorks from '../../../components/HowItWorks';
 import CustomerFeedback from '../../../components/CustomerFeedback';
 import WhyChooseUs from '../../../components/WhyChooseUs';
+import CTASection from '../../../components/CTASection';
 
 const Home = () => {
   return (
@@ -31,6 +32,7 @@ const Home = () => {
       <HowItWorks></HowItWorks>
       <CustomerFeedback></CustomerFeedback>
       <WhyChooseUs></WhyChooseUs>
+      <CTASection></CTASection>
     </div>
   );
 };
