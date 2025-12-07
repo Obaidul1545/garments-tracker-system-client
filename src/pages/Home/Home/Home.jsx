@@ -1,11 +1,12 @@
 import React from 'react';
-import LoadingSpinner from '../../../components/LoadingSpinner';
+import HeroSection from '../../../components/HeroSection';
+import StatsSection from '../../../components/StatsSection';
 
 const Home = () => {
   return (
     <div>
-      <h1>Home</h1>
-      <LoadingSpinner></LoadingSpinner>
+      <HeroSection></HeroSection>
+      <StatsSection></StatsSection>
     </div>
   );
 };

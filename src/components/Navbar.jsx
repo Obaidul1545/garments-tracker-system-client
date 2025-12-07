@@ -167,7 +167,9 @@ const Navbar = () => {
               {links}
             </ul>
           </div>
-          <a className=" text-xl ">daisyUI</a>
+          <Link to={'/'} className=" text-xl ">
+            DaisyUI
+          </Link>
         </div>
         <div className="hidden lg:flex">
           <ul className="menu menu-horizontal px-1 space-x-2 flex items-center gap-2 font-semibold">
