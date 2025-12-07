@@ -11,7 +11,7 @@ const Footer = () => {
   return (
     <div>
       <footer className="bg-[#0F172A] text-white mt-5">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-12">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-2 pt-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Brand Section */}
             <div>
@@ -132,7 +132,7 @@ const Footer = () => {
                 </li>
                 <li className="flex items-center gap-2 text-gray-400">
                   <FaPhoneVolume size={16} />
-                  <span>+1 (555) 123-4567</span>
+                  <span>+880 1700-000000</span>
                 </li>
                 <li className="flex items-center gap-2 text-gray-400">
                   <FaMapMarkerAlt size={16} />
