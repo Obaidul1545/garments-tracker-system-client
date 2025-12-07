@@ -1,21 +1,33 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import loginImg from '../../../assets/login.png';
 import { FiEyeOff } from 'react-icons/fi';
 import { BsEye } from 'react-icons/bs';
+import useAuth from '../../../hooks/useAuth';
+import { toast } from 'react-toastify';
 
 const Login = () => {
+  const { logInUser } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleLogin = (data) => {
-    console.log('Login Data:', data);
+    logInUser(data.email, data.password)
+      .then(() => {
+        toast.success('User sign in Success full!!');
+        navigate(location.state || '/');
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
   };
   return (
     <div className="min-h-screen flex flex-col lg:flex-row items-center justify-center">

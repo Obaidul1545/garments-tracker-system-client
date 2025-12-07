@@ -10,6 +10,7 @@ import DashboardHome from '../pages/Dashboard/DashboardContent/DashboardContent'
 import AboutUs from '../pages/OtherPages/AboutUs';
 import Contact from '../pages/OtherPages/Contact';
 import AllProducts from '../pages/AllProducts/AllProducts';
+import Profile from '../pages/Profile/Profile';
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
       {
         path: 'contact',
         element: <Contact></Contact>,
+      },
+      {
+        path: 'profile',
+        element: <Profile></Profile>,
       },
     ],
   },

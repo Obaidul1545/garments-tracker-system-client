@@ -4,8 +4,10 @@ import { BsMailbox } from 'react-icons/bs';
 import { FaMapMarkerAlt, FaMapPin, FaPhoneVolume } from 'react-icons/fa';
 import { RiMailSendFill } from 'react-icons/ri';
 import { Link } from 'react-router';
+import useAuth from '../hooks/useAuth';
 
 const Footer = () => {
+  const { user } = useAuth();
   return (
     <div>
       <footer className="bg-[#0F172A] text-white mt-20">
@@ -46,22 +48,37 @@ const Footer = () => {
                     All Products
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    to="/auth/login"
-                    className="text-gray-400 hover:text-[#2DD4BF] transition-colors"
-                  >
-                    Login
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/auth/register"
-                    className="text-gray-400 hover:text-[#2DD4BF] transition-colors"
-                  >
-                    Register
-                  </Link>
-                </li>
+                {user ? (
+                  <>
+                    <li>
+                      <Link
+                        to="/profile"
+                        className="text-gray-400 hover:text-[#2DD4BF] transition-colors"
+                      >
+                        Profile
+                      </Link>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li>
+                      <Link
+                        to="/auth/login"
+                        className="text-gray-400 hover:text-[#2DD4BF] transition-colors"
+                      >
+                        Login
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/auth/register"
+                        className="text-gray-400 hover:text-[#2DD4BF] transition-colors"
+                      >
+                        Register
+                      </Link>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
 

@@ -1,20 +1,25 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import { FiEyeOff } from 'react-icons/fi';
 import { BsEye } from 'react-icons/bs';
 import useAuth from '../../../hooks/useAuth';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const Register = () => {
+  const axiosSecure = useAxiosSecure();
   const { registerUser, updateUser, setLoading } = useAuth();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
+  const location = useLocation;
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
   const [regLoading, setRegLoading] = useState(false);
@@ -24,7 +29,7 @@ const Register = () => {
     const profileImg = data.photo[0];
 
     registerUser(data.email, data.password)
-      .then((result) => {
+      .then(() => {
         const formData = new FormData();
         formData.append('image', profileImg);
         const imageApiUrl = `https://api.imgbb.com/1/upload?key=${
@@ -33,11 +38,18 @@ const Register = () => {
         axios.post(imageApiUrl, formData).then((res) => {
           const photoURL = res.data.data.url;
           const userInfo = {
-            email: data.email,
             displayName: data.name,
+            email: data.email,
             photoURL: photoURL,
+            role: data.role,
           };
           // database
+
+          axiosSecure.post('/users', userInfo).then((res) => {
+            if (res.data.insertedId) {
+              console.log('create user in database');
+            }
+          });
 
           // update
           const userProfile = {
@@ -48,16 +60,17 @@ const Register = () => {
             .then(() => {
               console.log('update user done');
               setLoading(false);
+              reset();
+              navigate(location.state || '/');
             })
             .catch((error) => {
               console.log(error);
             });
         });
-        toast.success('success');
+        toast.success('Register Success full!!!');
       })
       .catch((error) => {
-        console.log(error);
-        toast.error('error');
+        toast.error(error.message);
       });
 
     setRegLoading(false);
