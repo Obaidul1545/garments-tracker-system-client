@@ -4,9 +4,10 @@ import { Link, NavLink } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import LoadingSpinner from './LoadingSpinner';
 import { BiUser } from 'react-icons/bi';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, logOutUser } = useAuth();
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
   useEffect(() => {
@@ -17,6 +18,16 @@ const Navbar = () => {
 
   const handleTheme = (checked) => {
     setTheme(checked ? 'dark' : 'light');
+  };
+
+  const handleLogout = () => {
+    logOutUser()
+      .then(() => {
+        toast.success('logout successfully!');
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
   };
 
   const links = (
@@ -94,8 +105,11 @@ const Navbar = () => {
               />
             </ul>
           </div>
-          <div className="">
-            <button className="flex items-center gap-2 px-4 py-2 bg-[#0D9488] text-white rounded-md hover:bg-[#0D9488]/90 transition-colors">
+          <div>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 px-4 py-2 bg-[#0D9488] text-white rounded-md hover:bg-[#0D9488]/90 transition-colors"
+            >
               <MdLogout size={16} />
               Logout
             </button>

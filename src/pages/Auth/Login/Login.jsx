@@ -14,6 +14,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
   const location = useLocation();
@@ -23,6 +24,7 @@ const Login = () => {
     logInUser(data.email, data.password)
       .then(() => {
         toast.success('User sign in Success full!!');
+        reset();
         navigate(location.state || '/');
       })
       .catch((error) => {
