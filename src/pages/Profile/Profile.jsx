@@ -5,20 +5,24 @@ import { BiShield, BiUser } from 'react-icons/bi';
 import { BsMailbox } from 'react-icons/bs';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 const Profile = () => {
   const { user } = useAuth();
 
   const axiosSecure = useAxiosSecure();
 
-  const { data: databaseUser = [] } = useQuery({
+  const { data: databaseUser = [], isLoading } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
       const res = await axiosSecure.get(`/users?email=${user?.email}`);
       return res.data;
     },
   });
-  console.log(databaseUser);
+
+  if (isLoading) {
+    return <LoadingSpinner></LoadingSpinner>;
+  }
 
   return (
     <div>

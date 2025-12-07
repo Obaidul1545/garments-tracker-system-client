@@ -11,6 +11,7 @@ import AboutUs from '../pages/OtherPages/AboutUs';
 import Contact from '../pages/OtherPages/Contact';
 import AllProducts from '../pages/AllProducts/AllProducts';
 import Profile from '../pages/Profile/Profile';
+import PrivateRoute from './PrivateRoute';
 
 export const router = createBrowserRouter([
   {
@@ -36,7 +37,11 @@ export const router = createBrowserRouter([
       },
       {
         path: 'profile',
-        element: <Profile></Profile>,
+        element: (
+          <PrivateRoute>
+            <Profile></Profile>
+          </PrivateRoute>
+        ),
       },
     ],
   },
