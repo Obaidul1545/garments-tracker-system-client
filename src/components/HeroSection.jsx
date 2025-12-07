@@ -47,7 +47,7 @@ const HeroSection = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="relative"
             >
-              <div className="rounded-3xl overflow-hidden shadow-2xl">
+              <div className="rounded-xl overflow-hidden shadow-2xl">
                 <img
                   src="https://images.unsplash.com/photo-1721578006568-17901600cff3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnYXJtZW50JTIwZmFjdG9yeSUyMHByb2R1Y3Rpb258ZW58MXx8fHwxNzY0OTQ4MjQ4fDA&ixlib=rb-4.1.0&q=80&w=1080"
                   alt="Garment Factory"
