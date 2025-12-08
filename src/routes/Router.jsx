@@ -12,6 +12,7 @@ import Contact from '../pages/OtherPages/Contact';
 import AllProducts from '../pages/AllProducts/AllProducts';
 import Profile from '../pages/Profile/Profile';
 import PrivateRoute from './PrivateRoute';
+import ProductDetails from '../pages/ProductDetails/ProductDetails';
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,14 @@ export const router = createBrowserRouter([
       {
         path: 'all-products',
         element: <AllProducts></AllProducts>,
+      },
+      {
+        path: 'product/:productId',
+        element: (
+          <PrivateRoute>
+            <ProductDetails></ProductDetails>
+          </PrivateRoute>
+        ),
       },
       {
         path: 'about-us',

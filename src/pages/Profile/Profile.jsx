@@ -8,14 +8,20 @@ import { useQuery } from '@tanstack/react-query';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
 const Profile = () => {
-  const { user } = useAuth();
+  const { user, setLoading } = useAuth();
 
   const axiosSecure = useAxiosSecure();
 
-  const { data: databaseUser = [], isLoading } = useQuery({
+  const {
+    data: databaseUser = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
       const res = await axiosSecure.get(`/users?email=${user?.email}`);
+      refetch();
+      setLoading(false);
       return res.data;
     },
   });

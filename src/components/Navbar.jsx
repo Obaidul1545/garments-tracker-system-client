@@ -44,27 +44,15 @@ const Navbar = () => {
       >
         All Products
       </NavLink>
-      <NavLink
-        to="/about-us"
-        className="text-[#475569] hover:text-[#0D9488] transition-colors"
-      >
-        About Us
-      </NavLink>
-      <NavLink
-        to="/contact"
-        className="text-[#475569] hover:text-[#0D9488] transition-colors"
-      >
-        Contact
-      </NavLink>
-      <NavLink
-        to="/dashboard"
-        className="text-[#475569] hover:text-[#0D9488] transition-colors"
-      >
-        Dashboard
-      </NavLink>
 
       {user ? (
         <>
+          <NavLink
+            to="/dashboard"
+            className="text-[#475569] hover:text-[#0D9488] transition-colors"
+          >
+            Dashboard
+          </NavLink>
           <div className="dropdown dropdown-end z-50">
             <div
               tabIndex={0}
@@ -117,6 +105,18 @@ const Navbar = () => {
         </>
       ) : (
         <>
+          <NavLink
+            to="/about-us"
+            className="text-[#475569] hover:text-[#0D9488] transition-colors"
+          >
+            About Us
+          </NavLink>
+          <NavLink
+            to="/contact"
+            className="text-[#475569] hover:text-[#0D9488] transition-colors"
+          >
+            Contact
+          </NavLink>
           <Link
             to="/auth/login"
             className="text-[#475569] hover:text-[#0D9488] transition-colors"
