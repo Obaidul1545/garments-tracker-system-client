@@ -35,6 +35,7 @@ const SocialLogin = () => {
     <div className="">
       <button
         onClick={handleGoogleLogIn}
+        state={location.state}
         className="btn btn-outline w-full border-teal-600 flex items-center gap-2"
       >
         <FcGoogle size={24} />

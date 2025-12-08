@@ -123,6 +123,7 @@ const Login = () => {
             Don’t have an account?
             <Link
               to="/auth/register"
+              state={location.state}
               className="text-[#0D9488] hover:underline ml-1"
             >
               Register here

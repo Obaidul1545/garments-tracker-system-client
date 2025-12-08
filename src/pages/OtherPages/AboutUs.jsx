@@ -14,7 +14,7 @@ const AboutUs = () => {
           viewport={{ once: true }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <h1 className="text-4xl font-bold text-[#0F172A] mb-4">
+          <h1 className="text-3xl font-semibold text-[#0F172A] mb-4">
             About <span className="text-[#0F766E]">Our Company</span>
           </h1>
           <p className="text-[#475569] leading-relaxed">

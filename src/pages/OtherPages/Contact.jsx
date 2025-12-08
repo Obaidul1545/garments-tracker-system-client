@@ -6,7 +6,7 @@ const Contact = () => {
   return (
     <div className="container mx-auto">
       <div className="text-center my-10">
-        <h1 className="text-4xl md:text-6xl font-bold mb-4">
+        <h1 className="text-3xl font-semibold mb-4">
           Contact <span className="text-teal-700">Us</span>
         </h1>
         <p className="text-gray-500 max-w-2xl mx-auto">
