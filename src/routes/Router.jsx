@@ -13,6 +13,7 @@ import AllProducts from '../pages/AllProducts/AllProducts';
 import Profile from '../pages/Profile/Profile';
 import PrivateRoute from './PrivateRoute';
 import ProductDetails from '../pages/ProductDetails/ProductDetails';
+import BookingOrder from '../pages/BookingOrder/BookingOrder';
 
 export const router = createBrowserRouter([
   {
@@ -29,10 +30,18 @@ export const router = createBrowserRouter([
         element: <AllProducts></AllProducts>,
       },
       {
-        path: 'product/:productId',
+        path: 'product-details/:productId',
         element: (
           <PrivateRoute>
             <ProductDetails></ProductDetails>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'booking-order/:productId',
+        element: (
+          <PrivateRoute>
+            <BookingOrder></BookingOrder>
           </PrivateRoute>
         ),
       },

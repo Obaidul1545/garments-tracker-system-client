@@ -45,7 +45,7 @@ const ProductsCard = ({ product, index }) => {
           </div>
 
           <Link
-            to={`/product/${product._id}`}
+            to={`/product-details/${product._id}`}
             className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#0D9488] text-white rounded-xl hover:bg-[#0D9488]/90 transition-colors"
           >
             View Details

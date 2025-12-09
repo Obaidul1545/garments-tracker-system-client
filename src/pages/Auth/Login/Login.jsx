@@ -9,7 +9,7 @@ import useAuth from '../../../hooks/useAuth';
 import { toast } from 'react-toastify';
 
 const Login = () => {
-  const { logInUser } = useAuth();
+  const { logInUser, setLoading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -25,10 +25,12 @@ const Login = () => {
       .then(() => {
         toast.success('User sign in Success full!!');
         reset();
+        setLoading(false);
         navigate(location.state || '/');
       })
       .catch((error) => {
         toast.error(error.message);
+        setLoading(false);
       });
   };
   return (

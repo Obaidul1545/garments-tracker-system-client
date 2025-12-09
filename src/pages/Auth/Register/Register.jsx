@@ -65,6 +65,7 @@ const Register = () => {
             })
             .catch((error) => {
               console.log(error);
+              toast.error(error.message);
             });
         });
         toast.success('Register Success full!!!');
@@ -233,10 +234,9 @@ const Register = () => {
 
               <button
                 type="submit"
-                disabled={regLoading}
                 className="btn bg-teal-600 hover:bg-teal-700 text-white w-full rounded-md"
               >
-                {regLoading ? 'Creating Account...' : 'Register'}
+                Register
               </button>
             </form>
 

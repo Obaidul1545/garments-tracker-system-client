@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, useParams } from 'react-router';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
@@ -10,12 +9,23 @@ import {
   ShoppingCart,
   Truck,
 } from 'lucide-react';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import useAuth from '../../hooks/useAuth';
 
 const ProductDetails = () => {
+  const { user } = useAuth();
   const { productId } = useParams();
   const axiosSecure = useAxiosSecure();
 
-  const { data: product = [] } = useQuery({
+  const { data: DBUser = {} } = useQuery({
+    queryKey: ['users'],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users?email=${user?.email}`);
+      return res.data;
+    },
+  });
+
+  const { data: product = {}, isLoading } = useQuery({
     queryKey: ['product', productId],
     queryFn: async () => {
       const res = await axiosSecure.get(`/product/${productId}`);
@@ -23,10 +33,14 @@ const ProductDetails = () => {
     },
   });
 
+  if (isLoading) {
+    return <LoadingSpinner></LoadingSpinner>;
+  }
+
   return (
     <div>
-      <div className="min-h-screen bg-[#E2E8F0] py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className=" bg-[#E2E8F0] py-5">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-2">
           <Link
             to="/all-products"
             className="inline-flex items-center gap-2 text-[#475569] hover:text-[#0D9488] mb-8 transition-colors"
@@ -145,11 +159,22 @@ const ProductDetails = () => {
                   </ul>
                 </div>
 
-                {/* Action Buttons */}
                 <div className="space-y-3">
                   <Link
-                    // to={`/booking/${product.id}`}
-                    className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-[#0D9488] text-white rounded-xl hover:bg-[#0D9488]/90 transition-all shadow-lg hover:shadow-xl"
+                    to={
+                      !user ||
+                      DBUser?.role === 'admin' ||
+                      DBUser?.role === 'manager'
+                        ? '#'
+                        : `/booking-order/${product._id}`
+                    }
+                    className={`w-full flex items-center justify-center gap-2 px-6 py-4 bg-[#0D9488] text-white rounded-xl hover:bg-[#0D9488]/90 transition-all shadow-lg hover:shadow-xl ${
+                      !user ||
+                      DBUser?.role === 'admin' ||
+                      DBUser?.role === 'manager'
+                        ? 'opacity-50 cursor-not-allowed pointer-events-none'
+                        : 'hover:bg-[#0D9488]/90'
+                    }`}
                   >
                     <ShoppingCart className="w-5 h-5" />
                     Order Now
