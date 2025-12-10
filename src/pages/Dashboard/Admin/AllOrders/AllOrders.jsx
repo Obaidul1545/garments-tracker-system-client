@@ -11,7 +11,7 @@ const AllOrders = () => {
   const axiosInstance = useAxios();
 
   const { data: orders = [], isLoading } = useQuery({
-    queryKey: ['products', search],
+    queryKey: ['products', search, sortByStatus],
     queryFn: async () => {
       const res = await axiosInstance.get(
         `/all-orders?search=${search}&sortBy=${sortByStatus}`
@@ -20,8 +20,8 @@ const AllOrders = () => {
     },
   });
   return (
-    <div>
-      <div className="space-y-6 px-4 sm:px-6 lg:px-8 py-5">
+    <div className="container mx-auto">
+      <div className="space-y-6 px-3 sm:px-4 lg:px-4 py-5">
         <div>
           <h1 className="text-[#0F172A] text-3xl font-semibold mb-2">
             All Orders
@@ -150,7 +150,10 @@ const AllOrders = () => {
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <button className="p-2 text-[#0D9488] hover:bg-[#0D9488]/10 rounded-lg transition-colors">
+                        <button
+                          className="p-2 text-[#0D9488] hover:bg-[#0D9488]/10 rounded-lg transition-colors"
+                          title="View"
+                        >
                           <Eye className="w-5 h-5" />
                         </button>
                       </td>

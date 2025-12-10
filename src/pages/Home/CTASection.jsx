@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { motion } from 'framer-motion';
+import useAuth from '../../hooks/useAuth';
 
 const CTASection = () => {
+  const { user } = useAuth();
   return (
     <div>
       <section className="py-20 bg-linear-to-br from-[#0D9488] to-[#0F172A] text-white">
@@ -20,12 +22,22 @@ const CTASection = () => {
               garment production tracking
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/register"
-                className="btn btn-lg border-0 bg-white text-[#0D9488] rounded-md hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl"
-              >
-                Create Account
-              </Link>
+              {user ? (
+                <Link
+                  to="/dashboard"
+                  className="btn btn-lg border-0 bg-white text-[#0D9488] rounded-md hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl"
+                >
+                  Go to Dashboard
+                </Link>
+              ) : (
+                <Link
+                  to="/auth/register"
+                  className="btn btn-lg border-0 bg-white text-[#0D9488] rounded-md hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl"
+                >
+                  Create Account
+                </Link>
+              )}
+
               <Link
                 to="/all-products"
                 className="btn btn-lg btn-outline border-2 border-white text-white rounded-md hover:bg-white hover:text-[#0D9488] transition-all"

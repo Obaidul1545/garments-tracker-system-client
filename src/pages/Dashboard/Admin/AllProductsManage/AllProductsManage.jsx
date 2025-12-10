@@ -18,8 +18,8 @@ const AllProductsManage = () => {
     },
   });
   return (
-    <div>
-      <div className="space-y-6 px-4 sm:px-6 lg:px-8 py-5">
+    <div className="container mx-auto">
+      <div className="space-y-6 px-3 sm:px-4 lg:px-4 py-5">
         <div>
           <h1 className="text-[#0F172A] text-3xl font-semibold mb-2">
             All Products
