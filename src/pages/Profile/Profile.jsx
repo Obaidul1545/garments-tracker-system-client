@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
 import useAuth from '../../hooks/useAuth';
-import { FiAlertTriangle } from 'react-icons/fi';
+import { FiAlertCircle, FiAlertTriangle } from 'react-icons/fi';
 import { BiShield, BiUser } from 'react-icons/bi';
 import { BsMailbox } from 'react-icons/bs';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import { LogOut } from 'lucide-react';
+import { AlertCircle, LogOut } from 'lucide-react';
 import { toast } from 'react-toastify';
 
 const Profile = () => {
@@ -49,7 +49,9 @@ const Profile = () => {
           className="space-y-6"
         >
           <div>
-            <h1 className="text-[#0F172A] text-4xl mb-2">My Profile</h1>
+            <h1 className="text-[#0F172A] text-4xl font-semibold mb-2">
+              My Profile
+            </h1>
             <p className="text-[#475569]">
               View and manage your account information
             </p>
@@ -79,7 +81,7 @@ const Profile = () => {
                 </div>
 
                 <div className="flex-1 text-center md:text-left">
-                  <h2 className="text-[#0F172A] mb-2">
+                  <h2 className="text-[#0F172A] font-semibold mb-2">
                     {databaseUser?.displayName}
                   </h2>
                   <div className="flex flex-col md:flex-row items-center gap-3 mb-3">
@@ -165,28 +167,24 @@ const Profile = () => {
                 </div>
               </div>
 
-              {/* {databaseUser?.accountStatus === 'suspended' &&
-                databaseUser?.suspendReason && (
-                  <div className="bg-red-50 border-2 border-red-200 rounded-2xl p-6">
-                    <div className="flex items-start gap-3">
-                      <AlertCircle className="w-6 h-6 text-red-600 shrink-0 mt-1" />
-                      <div>
-                        <h3 className="text-red-900 mb-2">Account Suspended</h3>
-                        <p className="text-red-700 mb-2">
-                          Your account has been suspended for the following
-                          reason:
-                        </p>
-                        <p className="text-red-800 italic">
-                          &quot;{databaseUser?.suspendReason}&quot;
-                        </p>
-                        <p className="text-red-700 mt-4">
-                          Please contact support for assistance.
-                        </p>
-                      </div>
+              {databaseUser?.accountStatus === 'suspended' && (
+                <div className="bg-red-50 border-2 border-red-200 rounded-2xl p-6">
+                  <div className="flex items-start gap-3">
+                    <AlertCircle className="w-6 h-6 text-red-600 shrink-0 mt-1" />
+                    <div>
+                      <h3 className="text-red-900 mb-2">Account Suspended</h3>
+                      <p className="text-red-700 mb-2">
+                        Your account has been suspended for violating our
+                        platform policies.
+                      </p>
+                      <p className="text-red-700 mt-4">
+                        Please contact support for assistance.
+                      </p>
                     </div>
                   </div>
-                )}
-        
+                </div>
+              )}
+
               {databaseUser?.accountStatus === 'pending' && (
                 <div className="bg-yellow-50 border-2 border-yellow-200 rounded-2xl p-6">
                   <div className="flex items-start gap-3">
@@ -196,13 +194,13 @@ const Profile = () => {
                         Account Pending Approval
                       </h3>
                       <p className="text-yellow-700">
-                        Your account is awaiting administrator approval. You
-                        will receive an email once your account is activated.
+                        Your account is awaiting administrator approval. Please
+                        wait for the review to be completed.
                       </p>
                     </div>
                   </div>
                 </div>
-              )} */}
+              )}
             </div>
           </div>
 

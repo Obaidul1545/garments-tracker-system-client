@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router';
 import useRole from '../hooks/useRole';
 import {
+  CircleEllipsis,
+  CirclePlus,
   CreditCard,
   CreditCardIcon,
   Home,
@@ -9,16 +11,24 @@ import {
   PanelRightOpen,
   ShoppingBasket,
   ShoppingCart,
+  SquareChartGantt,
   Truck,
   TruckElectric,
   User,
 } from 'lucide-react';
-import { FaMotorcycle, FaTasks, FaUsers } from 'react-icons/fa';
+import {
+  FaCheckCircle,
+  FaListAlt,
+  FaMotorcycle,
+  FaTasks,
+  FaUsers,
+} from 'react-icons/fa';
 import { BiTask } from 'react-icons/bi';
-import { TbPackageExport } from 'react-icons/tb';
+import { TbLayoutGridFilled, TbPackageExport } from 'react-icons/tb';
 import { RiProfileFill } from 'react-icons/ri';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { MdPendingActions } from 'react-icons/md';
 
 const DashboardLayout = () => {
   const { role, roleLoading } = useRole();
@@ -101,26 +111,52 @@ const DashboardLayout = () => {
                 <>
                   <li>
                     <NavLink
-                      to={'/dashboard/assigned-deliveries'}
+                      to={'/dashboard/add-product'}
                       className={({ isActive }) => `${navItemClass(isActive)}`}
-                      data-tip="Homepage"
+                      data-tip="Add Product"
                     >
-                      <FaTasks />
+                      <CirclePlus size={20} />
                       <span className="is-drawer-close:hidden">
-                        Assigned Deliveries
+                        Add Product
                       </span>
                     </NavLink>
                   </li>
 
                   <li>
                     <NavLink
-                      to={'/dashboard/completed-deliveries'}
+                      to={'/dashboard/manage-products'}
                       className={({ isActive }) => `${navItemClass(isActive)}`}
-                      data-tip="Homepage"
+                      data-tip="Manage Products"
                     >
-                      <BiTask />
+                      <SquareChartGantt size={20} />
                       <span className="is-drawer-close:hidden">
-                        Completed Deliveries
+                        Manage Products
+                      </span>
+                    </NavLink>
+                  </li>
+
+                  <li>
+                    <NavLink
+                      to={'/dashboard/pending-orders'}
+                      className={({ isActive }) => `${navItemClass(isActive)}`}
+                      data-tip="Pending Orders"
+                    >
+                      <MdPendingActions size={20} />
+                      <span className="is-drawer-close:hidden">
+                        Pending Orders
+                      </span>
+                    </NavLink>
+                  </li>
+
+                  <li>
+                    <NavLink
+                      to={'/dashboard/approved-orders'}
+                      className={({ isActive }) => `${navItemClass(isActive)}`}
+                      data-tip="Approved Orders"
+                    >
+                      <FaCheckCircle size={20} />
+                      <span className="is-drawer-close:hidden">
+                        Approved Orders
                       </span>
                     </NavLink>
                   </li>
@@ -132,40 +168,38 @@ const DashboardLayout = () => {
                 <>
                   <li>
                     <NavLink
-                      to={'/dashboard/approve-riders'}
+                      to={'/dashboard/manage-users'}
                       className={({ isActive }) => `${navItemClass(isActive)}`}
-                      data-tip="Homepage"
+                      data-tip="Manage Users"
                     >
-                      <FaMotorcycle />
+                      <FaUsers size={20} />
                       <span className="is-drawer-close:hidden">
-                        Approve Riders
+                        Manage Users
                       </span>
                     </NavLink>
                   </li>
 
                   <li>
                     <NavLink
-                      to={'/dashboard/assign-riders'}
+                      to={'/dashboard/all-products-manage'}
                       className={({ isActive }) => `${navItemClass(isActive)}`}
-                      data-tip="Homepage"
+                      data-tip="All Products"
                     >
-                      <TbPackageExport />
+                      <TbLayoutGridFilled size={20} />
                       <span className="is-drawer-close:hidden">
-                        Assign Riders
+                        All Products
                       </span>
                     </NavLink>
                   </li>
 
                   <li>
                     <NavLink
-                      to={'/dashboard/users-management'}
+                      to={'/dashboard/all-orders'}
                       className={({ isActive }) => `${navItemClass(isActive)}`}
-                      data-tip="Homepage"
+                      data-tip="All Orders"
                     >
-                      <FaUsers />
-                      <span className="is-drawer-close:hidden">
-                        Users Management
-                      </span>
+                      <FaListAlt size={18} />
+                      <span className="is-drawer-close:hidden">All Orders</span>
                     </NavLink>
                   </li>
                 </>

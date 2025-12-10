@@ -16,6 +16,15 @@ import ProductDetails from '../pages/ProductDetails/ProductDetails';
 import BookingOrder from '../pages/BookingOrder/BookingOrder';
 import BuyerRoute from './BuyerRoute';
 import MyOrders from '../pages/Dashboard/Buyer/MyOrders/MyOrders';
+import ManagerRoute from './ManagerRoute';
+import AddProduct from '../pages/Dashboard/Manager/AddProduct/AddProduct';
+import ManageProducts from '../pages/Dashboard/Manager/ManageProducts/ManageProducts';
+import PendingOrders from '../pages/Dashboard/Manager/PendingOrders/PendingOrders';
+import ApprovedOrders from '../pages/Dashboard/Manager/ApprovedOrders/ApprovedOrders';
+import ManageUsers from '../pages/Dashboard/Admin/ManageUsers/ManageUsers';
+import AllOrders from '../pages/Dashboard/Admin/AllOrders/AllOrders';
+import AdminRoute from './AdminRoute';
+import AllProductsManage from '../pages/Dashboard/Admin/AllProductsManage/AllProductsManage';
 
 export const router = createBrowserRouter([
   {
@@ -100,7 +109,65 @@ export const router = createBrowserRouter([
         ),
       },
 
-      {},
+      // manager only
+      {
+        path: 'add-product',
+        element: (
+          <ManagerRoute>
+            <AddProduct></AddProduct>
+          </ManagerRoute>
+        ),
+      },
+      {
+        path: 'manage-products',
+        element: (
+          <ManagerRoute>
+            <ManageProducts></ManageProducts>
+          </ManagerRoute>
+        ),
+      },
+      {
+        path: 'pending-orders',
+        element: (
+          <ManagerRoute>
+            <PendingOrders></PendingOrders>
+          </ManagerRoute>
+        ),
+      },
+      {
+        path: 'approved-orders',
+        element: (
+          <ManagerRoute>
+            <ApprovedOrders></ApprovedOrders>
+          </ManagerRoute>
+        ),
+      },
+
+      // admin only
+      {
+        path: 'manage-users',
+        element: (
+          <AdminRoute>
+            <ManageUsers></ManageUsers>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'all-products-manage',
+        element: (
+          <AdminRoute>
+            <AllProductsManage></AllProductsManage>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'all-orders',
+        element: (
+          <AdminRoute>
+            <AllOrders></AllOrders>
+          </AdminRoute>
+        ),
+      },
     ],
   },
   {
