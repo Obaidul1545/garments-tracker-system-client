@@ -14,6 +14,8 @@ import Profile from '../pages/Profile/Profile';
 import PrivateRoute from './PrivateRoute';
 import ProductDetails from '../pages/ProductDetails/ProductDetails';
 import BookingOrder from '../pages/BookingOrder/BookingOrder';
+import BuyerRoute from './BuyerRoute';
+import MyOrders from '../pages/Dashboard/Buyer/MyOrders/MyOrders';
 
 export const router = createBrowserRouter([
   {
@@ -53,14 +55,6 @@ export const router = createBrowserRouter([
         path: 'contact',
         element: <Contact></Contact>,
       },
-      {
-        path: 'profile',
-        element: (
-          <PrivateRoute>
-            <Profile></Profile>
-          </PrivateRoute>
-        ),
-      },
     ],
   },
   {
@@ -80,13 +74,33 @@ export const router = createBrowserRouter([
   },
   {
     path: 'dashboard',
-    element: <DashboardLayout></DashboardLayout>,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
     errorElement: <NotFound></NotFound>,
     children: [
       {
         index: true,
         element: <DashboardHome></DashboardHome>,
       },
+      {
+        path: 'profile',
+        element: <Profile></Profile>,
+      },
+
+      // buyer only
+      {
+        path: 'my-orders',
+        element: (
+          <BuyerRoute>
+            <MyOrders></MyOrders>
+          </BuyerRoute>
+        ),
+      },
+
+      {},
     ],
   },
   {

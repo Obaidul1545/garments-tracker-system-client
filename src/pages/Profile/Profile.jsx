@@ -6,10 +6,11 @@ import { BsMailbox } from 'react-icons/bs';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import { LogOut } from 'lucide-react';
+import { toast } from 'react-toastify';
 
 const Profile = () => {
-  const { user, setLoading } = useAuth();
-
+  const { user, setLoading, logOutUser } = useAuth();
   const axiosSecure = useAxiosSecure();
 
   const {
@@ -26,10 +27,19 @@ const Profile = () => {
     },
   });
 
+  const handleLogout = () => {
+    logOutUser()
+      .then(() => {
+        toast.success('Logout successfully!');
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
+
   if (isLoading) {
     return <LoadingSpinner></LoadingSpinner>;
   }
-
   return (
     <div>
       <div className="max-w-4xl mx-auto my-10">
@@ -46,50 +56,62 @@ const Profile = () => {
           </div>
 
           {/* Profile Card */}
-          <div className="bg-white rounded-2xl p-8 shadow-md">
-            <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
-              <div className="relative">
-                <img
-                  src={databaseUser?.photoURL}
-                  alt={databaseUser?.displayName}
-                  className="w-32 h-32 rounded-2xl object-cover border-4 border-[#0D9488]"
-                />
-                <div
-                  className={`absolute -bottom-2 -right-2 w-10 h-10 rounded-full flex items-center justify-center ${
-                    databaseUser?.accountStatus === 'active'
-                      ? 'bg-green-500'
-                      : databaseUser?.accountStatus === 'pending'
-                      ? 'bg-yellow-500'
-                      : 'bg-red-500'
-                  }`}
-                >
-                  <div className="w-3 h-3 bg-white rounded-full"></div>
-                </div>
-              </div>
-
-              <div className="flex-1 text-center md:text-left">
-                <h2 className="text-[#0F172A] mb-2">
-                  {databaseUser?.displayName}
-                </h2>
-                <div className="flex flex-col md:flex-row items-center gap-3 mb-3">
-                  <span className="px-4 py-1 bg-[#0D9488]/20 text-[#0D9488] rounded-full capitalize">
-                    {databaseUser?.role}
-                  </span>
-                  <span
-                    className={`px-4 py-1 rounded-full capitalize ${
+          <div className="bg-white rounded-xl p-8 shadow-md">
+            <div className="flex flex-col md:flex-row justify-between mb-8">
+              <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
+                <div className="relative">
+                  <img
+                    src={databaseUser?.photoURL}
+                    alt={databaseUser?.displayName}
+                    className="w-32 h-32 rounded-2xl object-cover border-4 border-[#0D9488]"
+                  />
+                  <div
+                    className={`absolute -bottom-2 -right-2 w-10 h-10 rounded-full flex items-center justify-center ${
                       databaseUser?.accountStatus === 'active'
-                        ? 'bg-green-100 text-green-700'
+                        ? 'bg-green-500'
                         : databaseUser?.accountStatus === 'pending'
-                        ? 'bg-yellow-100 text-yellow-700'
-                        : 'bg-red-100 text-red-700'
+                        ? 'bg-yellow-500'
+                        : 'bg-red-500'
                     }`}
                   >
-                    {databaseUser?.accountStatus}
-                  </span>
+                    <div className="w-3 h-3 bg-white rounded-full"></div>
+                  </div>
                 </div>
-                <p className="text-[#475569]">
-                  Member since {new Date(databaseUser.createdAt).getFullYear()}
-                </p>
+
+                <div className="flex-1 text-center md:text-left">
+                  <h2 className="text-[#0F172A] mb-2">
+                    {databaseUser?.displayName}
+                  </h2>
+                  <div className="flex flex-col md:flex-row items-center gap-3 mb-3">
+                    <span className="px-4 py-1 bg-[#0D9488]/20 text-[#0D9488] rounded-full capitalize">
+                      {databaseUser?.role}
+                    </span>
+                    <span
+                      className={`px-4 py-1 rounded-full capitalize ${
+                        databaseUser?.accountStatus === 'active'
+                          ? 'bg-green-100 text-green-700'
+                          : databaseUser?.accountStatus === 'pending'
+                          ? 'bg-yellow-100 text-yellow-700'
+                          : 'bg-red-100 text-red-700'
+                      }`}
+                    >
+                      {databaseUser?.accountStatus}
+                    </span>
+                  </div>
+                  <p className="text-[#475569]">
+                    Member since{' '}
+                    {new Date(databaseUser.createdAt).getFullYear()}
+                  </p>
+                </div>
+              </div>
+              <div className="mx-auto md:mx-0">
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-2 px-4 py-2 bg-[#0D9488] text-white rounded-md hover:bg-[#0D9488]/90 transition-colors cursor-pointer"
+                >
+                  <LogOut size={20} />
+                  logout
+                </button>
               </div>
             </div>
 

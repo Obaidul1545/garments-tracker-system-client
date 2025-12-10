@@ -5,6 +5,7 @@ import useAuth from '../hooks/useAuth';
 import LoadingSpinner from './LoadingSpinner';
 import { BiUser } from 'react-icons/bi';
 import { toast } from 'react-toastify';
+import { Menu } from 'lucide-react';
 
 const Navbar = () => {
   const { user, loading, logOutUser } = useAuth();
@@ -80,7 +81,7 @@ const Navbar = () => {
               </div>
 
               <Link
-                to="/profile"
+                to="/dashboard/profile"
                 className="text-[#475569] hover:text-[#0D9488] transition-colors inline-flex gap-1 my-2"
               >
                 <BiUser size={18} /> Profile
@@ -141,24 +142,10 @@ const Navbar = () => {
   return (
     <div className=" bg-base-100 shadow-sm">
       <div className="navbar container mx-auto p-0 flex justify-between">
-        <div className="">
+        <div className="flex items-center">
           <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {' '}
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />{' '}
-              </svg>
+            <div tabIndex={0} role="button" className="p-5 lg:hidden">
+              <Menu />
             </div>
             <ul
               tabIndex="-1"
@@ -167,8 +154,8 @@ const Navbar = () => {
               {links}
             </ul>
           </div>
-          <Link to={'/'} className=" text-xl ">
-            DaisyUI
+          <Link to={'/'} className="text-xl font-semibold">
+            Garments Tracter
           </Link>
         </div>
         <div className="hidden lg:flex">

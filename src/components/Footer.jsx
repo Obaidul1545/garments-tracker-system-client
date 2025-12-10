@@ -13,7 +13,6 @@ const Footer = () => {
       <footer className="bg-[#0F172A] text-white mt-5">
         <div className="container mx-auto px-4 sm:px-6 lg:px-2 pt-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Brand Section */}
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-10 h-10 bg-linear-to-br from-[#0D9488] to-[#2DD4BF] rounded-lg flex items-center justify-center">
@@ -27,8 +26,6 @@ const Footer = () => {
               </p>
             </div>
 
-            {/* Quick Links */}
-            {/* login thakle profile er link dite hobe */}
             <div>
               <h3 className="mb-4">Quick Links</h3>
               <ul className="space-y-2">
@@ -52,7 +49,7 @@ const Footer = () => {
                   <>
                     <li>
                       <Link
-                        to="/profile"
+                        to="/dashboard/profile"
                         className="text-gray-400 hover:text-[#2DD4BF] transition-colors"
                       >
                         Profile
@@ -82,7 +79,6 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* Resources */}
             <div>
               <h3 className="mb-4">Resources</h3>
               <ul className="space-y-2">
@@ -121,7 +117,6 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* Contact Info */}
             <div>
               <h3 className="mb-4">Contact Us</h3>
               <ul className="space-y-3">

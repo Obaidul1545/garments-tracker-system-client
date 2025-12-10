@@ -1,17 +1,16 @@
-
+import React from 'react';
 import useAuth from '../hooks/useAuth';
 import useRole from '../hooks/useRole';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-const AdminRoute = ({ children }) => {
+const BuyerRoute = ({ children }) => {
   const { loading } = useAuth();
-  const { roleLoading, role } = useRole();
-
+  const { role, roleLoading } = useRole();
   if (loading || roleLoading) {
     return <LoadingSpinner></LoadingSpinner>;
   }
 
-  if (role !== 'admin') {
+  if (role !== 'buyer') {
     return (
       <div>
         <h2 className="text-3xl">Forbidden</h2>
@@ -22,4 +21,4 @@ const AdminRoute = ({ children }) => {
   return children;
 };
 
-export default AdminRoute;
+export default BuyerRoute;
