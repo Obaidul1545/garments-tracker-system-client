@@ -24,8 +24,9 @@ const ManageUsers = () => {
     queryKey: ['users', search, role],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/all-users?search=${search}&role=${role}`
+        `/manage-users?search=${search}&role=${role}`
       );
+      refetch();
       return res.data;
     },
   });
@@ -78,7 +79,6 @@ const ManageUsers = () => {
     }
   };
 
-  if (isLoading) return <LoadingSpinner></LoadingSpinner>;
   return (
     <div>
       <div className="space-y-6 px-4 sm:px-6 lg:px-8 py-5">
@@ -91,18 +91,19 @@ const ManageUsers = () => {
           </div>
         </div>
 
-        {/* Search user */}
-        <div className="bg-white rounded-md p-6 shadow-md flex flex-col md:flex-row justify-between items-center">
-          <div className="relative max-w-md">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#475569]" />
-            <input
-              type="text"
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search user..."
-              className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#0D9488] focus:border-transparent outline-none transition-all"
-            />
-          </div>
-          <div className="max-w-md mt-4 flex gap-4">
+        {/* Search user  and sort*/}
+        <div className="bg-white rounded-2xl p-6 shadow-md">
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="relative ">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#475569]" />
+              <input
+                type="text"
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search user..."
+                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#0D9488] focus:border-transparent outline-none transition-all"
+              />
+            </div>
+
             <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
@@ -117,101 +118,110 @@ const ManageUsers = () => {
         </div>
 
         {/* Users Table */}
-        <div className="bg-white rounded-md shadow-md overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-[#E2E8F0]">
-                <tr>
-                  <th className="px-6 py-4 text-left text-[#0F172A]">Name</th>
-                  <th className="px-6 py-4 text-left text-[#0F172A]">Email</th>
-                  <th className="px-6 py-4 text-left text-[#0F172A]">Role</th>
-                  <th className="px-6 py-4 text-left text-[#0F172A]">Status</th>
-                  <th className="px-6 py-4 text-left text-[#0F172A]">
-                    Join Date
-                  </th>
-                  <th className="px-6 py-4 text-left text-[#0F172A]">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
-                {databaseUser.map((user, index) => (
-                  <motion.tr
-                    key={user._id}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: index * 0.05 }}
-                    className="hover:bg-gray-50"
-                  >
-                    <td className="px-6 py-4">
-                      <div className="text-[#475569]">{user.displayName}</div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="text-[#475569]">{user.email}</div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className="px-3 py-1 rounded-full bg-teal-50 text-teal-700">
-                        {user.role}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span
-                        className={`px-3 py-1 rounded-full ${
-                          user.accountStatus === 'active'
-                            ? 'bg-green-100 text-green-700'
-                            : user.accountStatus === 'pending'
-                            ? 'bg-yellow-100 text-yellow-700'
-                            : 'bg-red-100 text-red-700'
-                        }`}
-                      >
-                        {user.accountStatus}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="text-[#475569]">
-                        {new Date(user.createdAt).toDateString()}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-2">
-                        {user.accountStatus === 'suspended' ? (
-                          <button
-                            onClick={() => openStatusModal(user)}
-                            className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors cursor-pointer"
-                            title="Activate User"
-                          >
-                            <CheckCircle size={20} />
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => openStatusModal(user)}
-                            className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
-                            title="Suspend User"
-                          >
-                            <Ban size={20} />
-                          </button>
-                        )}
-                        <button
-                          onClick={() => openRoleModal(user)}
-                          className="text-[#0D9488] hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
-                          title="Edit User"
-                        >
-                          <FaUserEdit size={20} />
-                        </button>
-                      </div>
-                    </td>
-                  </motion.tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
 
-          {databaseUser.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-[#475569]">No users found</p>
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : (
+          <div className="bg-white rounded-md shadow-md overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-[#E2E8F0]">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-[#0F172A]">Name</th>
+                    <th className="px-6 py-4 text-left text-[#0F172A]">
+                      Email
+                    </th>
+                    <th className="px-6 py-4 text-left text-[#0F172A]">Role</th>
+                    <th className="px-6 py-4 text-left text-[#0F172A]">
+                      Status
+                    </th>
+                    <th className="px-6 py-4 text-left text-[#0F172A]">
+                      Join Date
+                    </th>
+                    <th className="px-6 py-4 text-left text-[#0F172A]">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {databaseUser.map((user, index) => (
+                    <motion.tr
+                      key={user._id}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: index * 0.05 }}
+                      className="hover:bg-gray-50"
+                    >
+                      <td className="px-6 py-4">
+                        <div className="text-[#475569]">{user.displayName}</div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="text-[#475569]">{user.email}</div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="px-3 py-1 rounded-full bg-teal-50 text-teal-700">
+                          {user.role}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span
+                          className={`px-3 py-1 rounded-full ${
+                            user.accountStatus === 'active'
+                              ? 'bg-green-100 text-green-700'
+                              : user.accountStatus === 'pending'
+                              ? 'bg-yellow-100 text-yellow-700'
+                              : 'bg-red-100 text-red-700'
+                          }`}
+                        >
+                          {user.accountStatus}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="text-[#475569]">
+                          {new Date(user.createdAt).toDateString()}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-2">
+                          {user.accountStatus === 'suspended' ? (
+                            <button
+                              onClick={() => openStatusModal(user)}
+                              className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors cursor-pointer"
+                              title="Activate User"
+                            >
+                              <CheckCircle size={20} />
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => openStatusModal(user)}
+                              className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
+                              title="Suspend User"
+                            >
+                              <Ban size={20} />
+                            </button>
+                          )}
+                          <button
+                            onClick={() => openRoleModal(user)}
+                            className="text-[#0D9488] hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
+                            title="Edit User"
+                          >
+                            <FaUserEdit size={20} />
+                          </button>
+                        </div>
+                      </td>
+                    </motion.tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          )}
-        </div>
+
+            {databaseUser.length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-[#475569]">No users found</p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* role update modal */}
@@ -224,7 +234,6 @@ const ManageUsers = () => {
 
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div
-            transition
             className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl border border-gray-200
       duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0"
           >
@@ -284,7 +293,6 @@ const ManageUsers = () => {
 
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div
-            transition
             className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl border border-gray-200
       duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0"
           >
@@ -333,48 +341,6 @@ const ManageUsers = () => {
           </div>
         </div>
       </dialog>
-
-      {/* Suspend Modal
-      {showSuspendModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="bg-white rounded-2xl p-8 max-w-md w-full"
-          >
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-[#0F172A]">Suspend User</h2>
-              <button
-                onClick={() => {
-                  setShowSuspendModal(false);
-                }}
-                className="p-2 hover:bg-gray-100 rounded-lg"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="flex gap-3">
-              <button
-                // onClick={() => {
-                //   setShowSuspendModal(false);
-                //   setSelectedUser(null);
-                //   setSuspendReason('');
-                // }}
-                className="flex-1 px-4 py-3 border-2 border-gray-300 text-[#475569] rounded-xl hover:bg-gray-50 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                // onClick={handleSuspend}
-                className="flex-1 px-4 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors"
-              >
-                Suspend User
-              </button>
-            </div>
-          </motion.div>
-        </div>
-      )} */}
     </div>
   );
 };
