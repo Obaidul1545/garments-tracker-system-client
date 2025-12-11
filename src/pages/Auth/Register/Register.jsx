@@ -27,7 +27,6 @@ const Register = () => {
   const handleRegister = async (data) => {
     setRegLoading(true);
     const profileImg = data.photo[0];
-
     registerUser(data.email, data.password)
       .then(() => {
         const formData = new FormData();
@@ -58,13 +57,11 @@ const Register = () => {
           };
           updateUser(userProfile)
             .then(() => {
-              console.log('update user done');
               setLoading(false);
               reset();
               navigate(location.state || '/');
             })
             .catch((error) => {
-              console.log(error);
               toast.error(error.message);
             });
         });

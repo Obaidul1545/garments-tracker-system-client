@@ -1,9 +1,94 @@
 import { motion } from 'framer-motion';
-import { DollarSign, FileText, Package } from 'lucide-react';
+import { DollarSign, FileText, ImageIcon, Package, X } from 'lucide-react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import useAxiosSecure from '../../../../hooks/useAxiosSecure';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import useAuth from '../../../../hooks/useAuth';
+import { useNavigate } from 'react-router';
 
 const AddProduct = () => {
-  const image = [];
-  const handleSubmit = () => {};
+  const { user } = useAuth();
+  const { register, handleSubmit, reset } = useForm();
+  const [images, setImages] = useState([]);
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+
+  const handleSelectImages = (e) => {
+    const newFiles = Array.from(e.target.files);
+    setImages((prev) => [...prev, ...newFiles]);
+  };
+  const removeImage = (index) => {
+    setImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  // const handleAddProduct = async (data) => {
+  //   try {
+  //     const formData = new FormData();
+  //     const uploadedUrls = [];
+  //     for (const img of images) {
+  //       const formData = new FormData();
+  //       formData.append('image', img);
+  //       const url = `https://api.imgbb.com/1/upload?key=${
+  //         import.meta.env.VITE_IMAGE_HOST_KEY
+  //       }`;
+  //       const res = await axios.post(url, formData);
+  //       uploadedUrls.push(res.data.data.url);
+  //     }
+
+  //     const res = await axiosSecure.post('/add-product', formData);
+
+  //     console.log('Server Response:', res.data);
+  //     toast.success('Product added successfully!');
+
+  //     reset();
+  //     setImages([]);
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error('Failed to add product!');
+  //   }
+  // };
+  const handleAddProduct = async (data) => {
+    try {
+      const uploadedUrls = [];
+      for (const img of images) {
+        const formData = new FormData();
+        formData.append('image', img);
+        const uploadUrl = `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_IMAGE_HOST_KEY
+        }`;
+        const res = await axios.post(uploadUrl, formData);
+        uploadedUrls.push(res.data.data.url);
+      }
+
+      const productData = {
+        title: data.title,
+        description: data.description,
+        category: data.category,
+        price: data.price,
+        availableQuantity: data.availableQuantity,
+        minimumOrder: data.minimumOrder,
+        images: uploadedUrls,
+        demoVideo: data.demoVideo || null,
+        paymentMode: data.paymentMode,
+        showOnHome: data.showOnHome,
+        createdBy: 'Manager User',
+        createdByEmail: user?.email,
+        createdAt: new Date(),
+      };
+      const res = await axiosSecure.post('/add-product', productData);
+      if (res.data.insertedId) {
+        toast.success('Product added successfully!');
+        reset();
+        setImages([]);
+        navigate('/dashboard/manage-products');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Failed to add product!');
+    }
+  };
 
   return (
     <div>
@@ -21,7 +106,7 @@ const AddProduct = () => {
           </div>
 
           <form
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(handleAddProduct)}
             className="bg-white rounded-md p-8 shadow-md space-y-6"
           >
             <div>
@@ -30,10 +115,7 @@ const AddProduct = () => {
                 <Package className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#475569]" />
                 <input
                   type="text"
-                  // value={formData.title}
-                  // onChange={(e) =>
-                  //   setFormData({ ...formData, title: e.target.value })
-                  // }
+                  {...register('title', { required: true })}
                   className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#0D9488] focus:border-transparent outline-none transition-all"
                   placeholder="Enter product title"
                   required
@@ -46,10 +128,7 @@ const AddProduct = () => {
               <div className="relative">
                 <FileText className="absolute left-4 top-4 w-5 h-5 text-[#475569]" />
                 <textarea
-                  // value={formData.description}
-                  // onChange={(e) =>
-                  //   setFormData({ ...formData, description: e.target.value })
-                  // }
+                  {...register('description', { required: true })}
                   className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#0D9488] focus:border-transparent outline-none transition-all resize-none"
                   rows={4}
                   placeholder="Product description..."
@@ -62,10 +141,7 @@ const AddProduct = () => {
               <div>
                 <label className="block text-[#0F172A] mb-2">Category</label>
                 <select
-                  // value={formData.paymentMode}
-                  // onChange={(e) =>
-                  //   setFormData({ ...formData, paymentMode: e.target.value })
-                  // }
+                  {...register('category', { required: true })}
                   className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#0D9488] focus:border-transparent outline-none transition-all"
                 >
                   <option value="Shirt">Shirt</option>
@@ -88,10 +164,7 @@ const AddProduct = () => {
                   <input
                     type="number"
                     step="0.01"
-                    // value={formData.price}
-                    // onChange={(e) =>
-                    //   setFormData({ ...formData, price: e.target.value })
-                    // }
+                    {...register('price', { required: true })}
                     className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#0D9488] focus:border-transparent outline-none transition-all"
                     placeholder="0.00"
                     required
@@ -107,10 +180,7 @@ const AddProduct = () => {
                 </label>
                 <input
                   type="number"
-                  // value={formData.quantity}
-                  // onChange={(e) =>
-                  //   setFormData({ ...formData, quantity: e.target.value })
-                  // }
+                  {...register('availableQuantity', { required: true })}
                   className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#0D9488] focus:border-transparent outline-none transition-all"
                   placeholder="1000"
                   required
@@ -123,10 +193,7 @@ const AddProduct = () => {
                 </label>
                 <input
                   type="number"
-                  // value={formData.minimumOrder}
-                  // onChange={(e) =>
-                  //   setFormData({ ...formData, minimumOrder: e.target.value })
-                  // }
+                  {...register('minimumOrder', { required: true })}
                   className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#0D9488] focus:border-transparent outline-none transition-all"
                   placeholder="50"
                   required
@@ -134,37 +201,47 @@ const AddProduct = () => {
               </div>
             </div>
 
-            <div>
-              <label className="block text-[#0F172A] mb-2">
-                Product Images
+            <label className="block text-[#0F172A] ">Product Images</label>
+            <div className="">
+              <label
+                htmlFor="images"
+                className="flex flex-col items-center justify-center p-5  h-40 bg-white border border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-[#0D9488] transition-all"
+              >
+                <ImageIcon className="w-10 h-10 text-gray-400" />
+                <p className="text-gray-500 mt-2">
+                  Click to upload multiple images
+                </p>
+                <input
+                  id="images"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handleSelectImages}
+                  className="hidden"
+                />
               </label>
 
-              <div className="relative">
-                <input
-                  type="file"
-                  multiple
-                  accept="image/*"
-                  // onChange={(e) =>
-                  //   setFormData({
-                  //     ...formData,
-                  //     images: [...e.target.files],
-                  //   })
-                  // }
-                  className="w-full pl-4 pr-4 py-3 border border-gray-300 rounded-md 
-                 focus:ring-2 focus:ring-[#0D9488] focus:border-transparent 
-                 outline-none transition-all bg-white"
-                />
-              </div>
+              {images.length > 0 && (
+                <div className="grid grid-cols-3 gap-4 mt-3">
+                  {images.map((image, index) => (
+                    <div
+                      key={index}
+                      className="relative group border rounded-lg overflow-hidden"
+                    >
+                      <img
+                        src={URL.createObjectURL(image)}
+                        alt=""
+                        className="w-full h-full object-cover"
+                      />
 
-              {/* show preview image array dite hobe  */}
-              {image?.images?.length > 0 && (
-                <div className="mt-3 grid grid-cols-3 gap-3">
-                  {Array.from(image.images).map((img, i) => (
-                    <img
-                      key={i}
-                      src={URL.createObjectURL(img)}
-                      className="w-full h-24 object-cover rounded-md border"
-                    />
+                      <button
+                        type="button"
+                        onClick={() => removeImage(index)}
+                        className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
                   ))}
                 </div>
               )}
@@ -176,22 +253,18 @@ const AddProduct = () => {
               </label>
               <input
                 type="url"
-                // value={formData.demoVideo}
-                // onChange={(e) =>
-                //   setFormData({ ...formData, demoVideo: e.target.value })
-                // }
+                {...register('demoVideo')}
                 className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#0D9488] focus:border-transparent outline-none transition-all"
                 placeholder="https://demoLink.com/..."
               />
             </div>
 
             <div>
-              <label className="block text-[#0F172A] mb-2">Payment Mode</label>
+              <label className="block text-[#0F172A] mb-2">
+                Payment Options
+              </label>
               <select
-                // value={formData.paymentMode}
-                // onChange={(e) =>
-                //   setFormData({ ...formData, paymentMode: e.target.value })
-                // }
+                {...register('paymentMode')}
                 className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#0D9488] focus:border-transparent outline-none transition-all"
               >
                 <option value="PayFirst">PayFirst</option>
@@ -203,10 +276,7 @@ const AddProduct = () => {
               <input
                 type="checkbox"
                 id="showOnHome"
-                // checked={formData.showOnHome}
-                // onChange={(e) =>
-                //   setFormData({ ...formData, showOnHome: e.target.checked })
-                // }
+                {...register('showOnHome')}
                 className="w-5 h-5 text-[#0D9488] rounded focus:ring-2 focus:ring-[#0D9488]"
               />
               <label htmlFor="showOnHome" className="text-[#0F172A]">
@@ -217,7 +287,7 @@ const AddProduct = () => {
             <div className=" pt-4">
               <button
                 type="submit"
-                className="w-full px-6 py-3 bg-[#0D9488] text-white rounded-md hover:bg-[#0D9488]/90 transition-colors disabled:opacity-50 cursor-pointer"
+                className="w-full px-6 py-3 bg-[#0D9488] text-white rounded-md hover:bg-[#0D9488]/90 transition-colors  cursor-pointer"
               >
                 Add Product
               </button>
