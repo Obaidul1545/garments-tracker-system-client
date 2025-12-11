@@ -4,13 +4,13 @@ import useAxios from '../../../../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import { Edit2, PlusCircle, Search, Trash2 } from 'lucide-react';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
-import { RiEdit2Fill } from 'react-icons/ri';
 import { Link } from 'react-router';
 
 const ManageProducts = () => {
   const [search, setSearch] = useState('');
   const axiosInstance = useAxios();
 
+  // edit korte hobe
   const { data: products = [], isLoading } = useQuery({
     queryKey: ['products', search],
     queryFn: async () => {
