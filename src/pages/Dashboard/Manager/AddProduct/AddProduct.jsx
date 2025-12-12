@@ -71,7 +71,7 @@ const AddProduct = () => {
         minimumOrder: data.minimumOrder,
         images: uploadedUrls,
         demoVideo: data.demoVideo || null,
-        paymentMode: data.paymentMode,
+        paymentOptions: data.paymentOptions,
         showOnHome: data.showOnHome,
         createdBy: 'Manager User',
         createdByEmail: user?.email,
@@ -264,7 +264,7 @@ const AddProduct = () => {
                 Payment Options
               </label>
               <select
-                {...register('paymentMode')}
+                {...register('paymentOptions')}
                 className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#0D9488] focus:border-transparent outline-none transition-all"
               >
                 <option value="PayFirst">PayFirst</option>

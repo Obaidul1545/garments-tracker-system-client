@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Link, useParams } from 'react-router';
+import { Link, useNavigate, useParams } from 'react-router';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft, MapPin, Phone, ShoppingCart, User } from 'lucide-react';
@@ -13,6 +13,7 @@ const BookingOrder = () => {
   const { user } = useAuth();
   const { productId } = useParams();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -33,8 +34,10 @@ const BookingOrder = () => {
     name: 'quantity',
     defaultValue: 0,
   });
+
   const totalPrice = quantity * product.price;
-  const handleSubmitOrder = (data) => {
+
+  const handleSubmitOrder = async (data) => {
     const orderData = {
       ...data,
       productTitle: product.title,
@@ -60,19 +63,42 @@ const BookingOrder = () => {
         title: 'text-[#0F172A] font-bold text-lg',
         content: 'text-gray-700 text-sm',
       },
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        // navigate('/dashboard/my-parcels');
-        axiosSecure.post('/orders', orderData).then(() => {
-          Swal.fire({
-            title: 'Order placed!',
-            text: 'Your order has been placed successfully.',
-            icon: 'success',
-            confirmButtonColor: '#0D9488',
-            background: '#f8fafc',
-            color: '#0F172A',
-          });
+        const res = await axiosSecure.post('/orders', orderData);
+        const savedOrder = res.data;
+        console.log(savedOrder);
+
+        if (product.paymentOptions === 'PayFirst') {
+          const paymentInfo = {
+            totalPrice,
+            orderId: savedOrder.orderId,
+            trackingId: savedOrder.trackingId,
+            email: user.email,
+            title: product.title,
+            productId: productId,
+          };
+
+          const res = await axiosSecure.post(
+            '/create-checkout-session',
+            paymentInfo
+          );
+
+          console.log(res);
+          window.location.href = res.data.url;
+          return;
+        }
+
+        Swal.fire({
+          title: 'Order placed!',
+          text: 'Your order has been placed successfully.',
+          icon: 'success',
+          confirmButtonColor: '#0D9488',
+          background: '#f8fafc',
+          color: '#0F172A',
         });
+
+        navigate('/dashboard/my-orders');
       }
     });
   };
@@ -263,7 +289,6 @@ const BookingOrder = () => {
                   )}
                 </div>
 
-                {/* Delivery Address */}
                 <div>
                   <label className="block text-[#0F172A] mb-2">
                     Delivery Address
@@ -301,7 +326,6 @@ const BookingOrder = () => {
                   </div>
                 </div>
 
-                {/* Submit Button */}
                 <button
                   type="submit"
                   className="w-full py-4 bg-[#0D9488] text-white rounded-md hover:bg-[#0D9488]/90 transition-colors  shadow-lg hover:shadow-xl cursor-pointer"

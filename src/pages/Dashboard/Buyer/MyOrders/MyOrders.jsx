@@ -22,6 +22,7 @@ const MyOrders = () => {
       return res.data;
     },
   });
+
   return (
     <div className="container mx-auto">
       <div>
@@ -80,6 +81,9 @@ const MyOrders = () => {
                         Quantity
                       </th>
                       <th className="px-6 py-4 text-left text-[#0F172A]">
+                        total
+                      </th>
+                      <th className="px-6 py-4 text-left text-[#0F172A]">
                         Payment
                       </th>
                       <th className="px-6 py-4 text-left text-[#0F172A]">
@@ -103,7 +107,7 @@ const MyOrders = () => {
                         className="hover:bg-gray-50"
                       >
                         <td className="px-6 py-4">
-                          <div className="text-[#0F172A]">{order.orderId}</div>
+                          <div className="text-[#0F172A]">{order?.orderId}</div>
                         </td>
 
                         <td className="px-6 py-4">
@@ -118,7 +122,14 @@ const MyOrders = () => {
                         </td>
                         <td className="px-6 py-4">
                           <div className="text-[#0D9488]">
-                            ${order.totalPrice}
+                            ${order.totalPrice.toFixed(2)}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="text-[#0D9488]">
+                            {order.paymentStatus
+                              ? order.paymentStatus
+                              : 'Cash on delivery'}
                           </div>
                         </td>
                         <td className="px-6 py-4">

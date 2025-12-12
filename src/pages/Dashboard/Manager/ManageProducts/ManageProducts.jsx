@@ -96,7 +96,7 @@ const ManageProducts = () => {
                     </td>
                     <td className="px-6 py-4">
                       <div className="text-[#475569]">
-                        {product.paymentMode}
+                        {product.paymentOptions}
                       </div>
                     </td>
                     <td className="px-6 py-4">

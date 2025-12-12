@@ -25,6 +25,8 @@ import ManageUsers from '../pages/Dashboard/Admin/ManageUsers/ManageUsers';
 import AllOrders from '../pages/Dashboard/Admin/AllOrders/AllOrders';
 import AdminRoute from './AdminRoute';
 import AllProductsManage from '../pages/Dashboard/Admin/AllProductsManage/AllProductsManage';
+import PaymentSuccess from '../pages/Dashboard/Payment/PaymentSuccess';
+import PaymentCancelled from '../pages/Dashboard/Payment/PaymentCancelled';
 
 export const router = createBrowserRouter([
   {
@@ -97,6 +99,14 @@ export const router = createBrowserRouter([
       {
         path: 'profile',
         element: <Profile></Profile>,
+      },
+      {
+        path: 'payment-success',
+        element: <PaymentSuccess></PaymentSuccess>,
+      },
+      {
+        path: 'payment-cancelled',
+        element: <PaymentCancelled></PaymentCancelled>,
       },
 
       // buyer only

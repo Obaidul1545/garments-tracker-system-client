@@ -136,7 +136,7 @@ const ProductDetails = () => {
                       <CreditCard className="w-5 h-5 text-[#0D9488]" />
                       <p className="text-[#475569]">Payment</p>
                     </div>
-                    <p className="text-[#0F172A]">{product.paymentMode}</p>
+                    <p className="text-[#0F172A]">{product.paymentOptions}</p>
                   </div>
 
                   <div className="bg-[#E2E8F0] rounded-xl p-4">
@@ -146,17 +146,6 @@ const ProductDetails = () => {
                     </div>
                     <p className="text-[#0F172A]">10-15 days</p>
                   </div>
-                </div>
-
-                {/* Payment Options */}
-                <div className="bg-[#0D9488]/10 rounded-2xl p-4 mb-6">
-                  <h3 className="text-[#0F172A] mb-3">Payment Options</h3>
-                  <ul className="space-y-2 text-[#475569]">
-                    <li className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 bg-[#0D9488] rounded-full"></div>
-                      {product.paymentOptions}
-                    </li>
-                  </ul>
                 </div>
 
                 <div className="space-y-3">
