@@ -53,7 +53,7 @@ const ManageUsers = () => {
     }
   };
 
-  // Acount Status Update
+  // Account Status Update
   const openStatusModal = (user) => {
     setSelectedUser(user);
     setupdatedStatus(user.accountStatus);

@@ -55,13 +55,30 @@ const ProductDetails = () => {
               animate={{ opacity: 1, x: 0 }}
               className="space-y-6"
             >
-              <div className="rounded-3xl overflow-hidden shadow-xl">
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="w-full h-[500px] object-cover"
-                />
-              </div>
+              {product?.images ? (
+                product?.images?.map((img, index) => (
+                  <div
+                    key={index}
+                    className="rounded-xl overflow-hidden shadow"
+                  >
+                    <img
+                      src={img}
+                      alt={`${product?.title}-${index}`}
+                      className="w-full object-cover"
+                    />
+                  </div>
+                ))
+              ) : (
+                <div className="rounded-3xl overflow-hidden shadow-xl">
+                  <img
+                    src={product?.image}
+                    alt={product.title}
+                    className="w-full h-[500px] object-cover"
+                  />
+                </div>
+              )}
+
+              {}
 
               {/* Demo Video  */}
               {product.demoVideo && (

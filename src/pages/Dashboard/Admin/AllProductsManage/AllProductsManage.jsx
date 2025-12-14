@@ -8,15 +8,21 @@ import { RiEdit2Fill } from 'react-icons/ri';
 
 const AllProductsManage = () => {
   const [search, setSearch] = useState('');
-  const axiosInstance = useAxios();
 
-  const { data: products = [], isLoading } = useQuery({
+  const axiosSecure = useAxios();
+
+  const {
+    data: products = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ['products', search],
     queryFn: async () => {
-      const res = await axiosInstance.get(`/all-products?search=${search}`);
+      const res = await axiosSecure.get(`/products-by-email?search=${search}`);
       return res.data;
     },
   });
+
   return (
     <div className="container mx-auto">
       <div className="space-y-6 px-3 sm:px-4 lg:px-4 py-5">
@@ -82,7 +88,7 @@ const AllProductsManage = () => {
                     >
                       <td className="px-6 py-4">
                         <img
-                          src={product.image}
+                          src={product.image || product?.images?.[0]}
                           alt={product.title}
                           className="w-16 h-16 rounded-lg object-cover"
                         />

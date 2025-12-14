@@ -134,7 +134,7 @@ const BookingOrder = () => {
                 <div className="flex items-center gap-4 text-white">
                   <div className="w-20 h-20 rounded-lg overflow-hidden shrink-0">
                     <img
-                      src={product.image}
+                      src={product.image || product?.images?.[0]}
                       alt={product.title}
                       className="w-full h-full object-cover"
                     />

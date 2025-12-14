@@ -23,32 +23,6 @@ const AddProduct = () => {
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // const handleAddProduct = async (data) => {
-  //   try {
-  //     const formData = new FormData();
-  //     const uploadedUrls = [];
-  //     for (const img of images) {
-  //       const formData = new FormData();
-  //       formData.append('image', img);
-  //       const url = `https://api.imgbb.com/1/upload?key=${
-  //         import.meta.env.VITE_IMAGE_HOST_KEY
-  //       }`;
-  //       const res = await axios.post(url, formData);
-  //       uploadedUrls.push(res.data.data.url);
-  //     }
-
-  //     const res = await axiosSecure.post('/add-product', formData);
-
-  //     console.log('Server Response:', res.data);
-  //     toast.success('Product added successfully!');
-
-  //     reset();
-  //     setImages([]);
-  //   } catch (error) {
-  //     console.log(error);
-  //     toast.error('Failed to add product!');
-  //   }
-  // };
   const handleAddProduct = async (data) => {
     try {
       const uploadedUrls = [];
@@ -72,7 +46,7 @@ const AddProduct = () => {
         images: uploadedUrls,
         demoVideo: data.demoVideo || null,
         paymentOptions: data.paymentOptions,
-        showOnHome: data.showOnHome,
+        showOnHome: data.showOnHome || false,
         createdBy: 'Manager User',
         createdByEmail: user?.email,
         createdAt: new Date(),

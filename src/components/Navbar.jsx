@@ -155,7 +155,7 @@ const Navbar = () => {
             </ul>
           </div>
           <Link to={'/'} className="text-xl font-semibold">
-            Garments Tracter
+            Garments Tracker
           </Link>
         </div>
         <div className="hidden lg:flex">

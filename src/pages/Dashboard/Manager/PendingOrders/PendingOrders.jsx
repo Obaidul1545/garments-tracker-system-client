@@ -79,7 +79,9 @@ const PendingOrders = () => {
                       Total
                     </th>
 
-                    <th className="px-6 py-4 text-left text-[#0F172A]">Date</th>
+                    <th className="px-6 py-4 text-left text-[#0F172A]">
+                      Order Date
+                    </th>
                     <th className="px-6 py-4 text-left text-[#0F172A]">
                       Actions
                     </th>

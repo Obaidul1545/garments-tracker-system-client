@@ -27,6 +27,7 @@ import AdminRoute from './AdminRoute';
 import AllProductsManage from '../pages/Dashboard/Admin/AllProductsManage/AllProductsManage';
 import PaymentSuccess from '../pages/Dashboard/Payment/PaymentSuccess';
 import PaymentCancelled from '../pages/Dashboard/Payment/PaymentCancelled';
+import UpdateProduct from '../pages/Dashboard/Manager/ManageProducts/UpdateProduct';
 
 export const router = createBrowserRouter([
   {
@@ -133,6 +134,14 @@ export const router = createBrowserRouter([
         element: (
           <ManagerRoute>
             <ManageProducts></ManageProducts>
+          </ManagerRoute>
+        ),
+      },
+      {
+        path: 'update-product/:productId',
+        element: (
+          <ManagerRoute>
+            <UpdateProduct></UpdateProduct>
           </ManagerRoute>
         ),
       },
