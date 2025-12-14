@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { BiSearch } from 'react-icons/bi';
 import { useQuery } from '@tanstack/react-query';
-import useAxios from '../../hooks/useAxios';
 import ProductsCard from './ProductsCard';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const AllProducts = () => {
   const [search, setSearch] = useState('');
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
 
   const { data: products = [], isLoading } = useQuery({
     queryKey: ['products', search],
     queryFn: async () => {
-      const res = await axiosInstance.get(`/all-products?search=${search}`);
+      const res = await axiosSecure.get(`/all-products?search=${search}`);
       return res.data;
     },
   });

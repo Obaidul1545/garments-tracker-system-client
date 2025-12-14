@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import useAxios from '../../../../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import { Eye, Search } from 'lucide-react';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
 import { MdCancel } from 'react-icons/md';
 import useAuth from '../../../../hooks/useAuth';
+import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 
 const MyOrders = () => {
   const { user } = useAuth();
   const [search, setSearch] = useState('');
   const [sortByStatus, setSortByStatus] = useState('all');
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
 
   const { data: myOrders = [], isLoading } = useQuery({
     queryKey: ['myOrders', user.email, search, sortByStatus],
     queryFn: async () => {
-      const res = await axiosInstance.get(
+      const res = await axiosSecure.get(
         `/orders-by-email?email=${user.email}&search=${search}&sortBy=${sortByStatus}`
       );
       return res.data;

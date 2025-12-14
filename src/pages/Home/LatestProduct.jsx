@@ -1,17 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
-import useAxios from '../../hooks/useAxios';
 import ProductsCard from '../AllProducts/ProductsCard';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const LatestProduct = () => {
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
 
   const { data: products = [], isLoading } = useQuery({
     queryKey: ['products'],
     queryFn: async () => {
-      const res = await axiosInstance.get(`/latest-products`);
+      const res = await axiosSecure.get(`/latest-products`);
       return res.data;
     },
   });

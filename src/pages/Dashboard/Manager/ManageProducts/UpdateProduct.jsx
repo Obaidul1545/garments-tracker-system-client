@@ -1,8 +1,15 @@
 import { motion } from 'framer-motion';
-import { DollarSign, FileText, ImageIcon, Package, X } from 'lucide-react';
+import {
+  ArrowLeft,
+  DollarSign,
+  FileText,
+  ImageIcon,
+  Package,
+  X,
+} from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useParams, useNavigate } from 'react-router';
+import { useParams, useNavigate, Link } from 'react-router';
 import { toast } from 'react-toastify';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
@@ -72,6 +79,13 @@ const UpdateProduct = () => {
   if (isLoading) return <LoadingSpinner />;
   return (
     <div className="container mx-auto px-3 py-5">
+      <Link
+        to={'/dashboard/manage-products'}
+        className="inline-flex items-center gap-2 text-[#475569] hover:text-[#0D9488] mb-8 transition-colors"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Back to Products
+      </Link>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

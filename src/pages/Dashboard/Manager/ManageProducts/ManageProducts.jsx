@@ -5,10 +5,11 @@ import { useQuery } from '@tanstack/react-query';
 import { Edit2, PlusCircle, Search, Trash2 } from 'lucide-react';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
 import { Link } from 'react-router';
-import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
+import useAuth from '../../../../hooks/useAuth';
 
 const ManageProducts = () => {
+  const { user } = useAuth();
   const [search, setSearch] = useState('');
   const axiosSecure = useAxios();
 
@@ -25,6 +26,7 @@ const ManageProducts = () => {
   });
 
   const handleDeleteProduct = (id) => {
+    console.log('Access token:', user?.accessToken);
     Swal.fire({
       title: 'Delete Product?',
       text: 'This action cannot be undone.',

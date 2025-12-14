@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import useAxios from '../../../../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import { Eye, Search } from 'lucide-react';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
+import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 
 const ApprovedOrders = () => {
   const [search, setSearch] = useState('');
   const [sortByStatus, setSortByStatus] = useState('all');
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure()
 
   // edit korte hobe
   const { data: orders = [], isLoading } = useQuery({
     queryKey: ['products', search, sortByStatus],
     queryFn: async () => {
-      const res = await axiosInstance.get(
+      const res = await axiosSecure.get(
         `/all-orders?search=${search}&sortBy=${sortByStatus}`
       );
       return res.data;

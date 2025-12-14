@@ -6,17 +6,12 @@ import { CheckCircle, Eye, Search, XCircle } from 'lucide-react';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
 
 const PendingOrders = () => {
-  const [search, setSearch] = useState('');
-  const [sortByStatus, setSortByStatus] = useState('all');
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxios();
 
-  // edit korte hobe
-  const { data: orders = [], isLoading } = useQuery({
-    queryKey: ['products', search, sortByStatus],
+  const { data: pendingOrders = [], isLoading } = useQuery({
+    queryKey: ['pendingOrders'],
     queryFn: async () => {
-      const res = await axiosInstance.get(
-        `/all-orders?search=${search}&sortBy=${sortByStatus}`
-      );
+      const res = await axiosSecure.get(`/orders/pending`);
       return res.data;
     },
   });
@@ -28,33 +23,6 @@ const PendingOrders = () => {
             Pending Orders
           </h1>
           <p className="text-[#475569]">Review and approve customer orders</p>
-        </div>
-
-        <div className="bg-white rounded-md p-6 shadow-md">
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#475569]" />
-              <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search orders..."
-                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#0D9488] focus:border-transparent outline-none transition-all"
-              />
-            </div>
-            <select
-              value={sortByStatus}
-              onChange={(e) => setSortByStatus(e.target.value)}
-              className="px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#0D9488] focus:border-transparent outline-none transition-all"
-            >
-              <option value="all">All Status</option>
-              <option value="pending">Pending</option>
-              <option value="approved">Approved</option>
-              <option value="sewing">In Production</option>
-              <option value="delivered">Delivered</option>
-              <option value="cancelled">Cancelled</option>
-            </select>
-          </div>
         </div>
 
         {isLoading ? (
@@ -88,7 +56,7 @@ const PendingOrders = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {orders.map((order, index) => (
+                  {pendingOrders.map((order, index) => (
                     <motion.tr
                       key={order._id}
                       initial={{ opacity: 0 }}
@@ -149,7 +117,7 @@ const PendingOrders = () => {
               </table>
             </div>
 
-            {orders.length === 0 && (
+            {pendingOrders.length === 0 && (
               <div className="text-center py-12">
                 <p className="text-[#475569]">
                   No pending orders at the moment
