@@ -1,20 +1,25 @@
-import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import useAxios from '../../../../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
-import { CheckCircle, Eye, Search, XCircle } from 'lucide-react';
+import { CheckCircle, Eye, XCircle } from 'lucide-react';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
+import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 
 const PendingOrders = () => {
-  const axiosSecure = useAxios();
+  const axiosSecure = useAxiosSecure();
 
-  const { data: pendingOrders = [], isLoading } = useQuery({
+  const {
+    data: pendingOrders = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ['pendingOrders'],
     queryFn: async () => {
       const res = await axiosSecure.get(`/orders/pending`);
+      refetch();
       return res.data;
     },
   });
+
   return (
     <div className="container mx-auto">
       <div className="space-y-6 px-3 sm:px-4 lg:px-4 py-5">
@@ -87,7 +92,7 @@ const PendingOrders = () => {
                       </td>
                       <td className="px-6 py-4">
                         <div className="text-[#0D9488]">
-                          ${order.totalPrice}
+                          ${order.totalPrice.toFixed(2)}
                         </div>
                       </td>
 

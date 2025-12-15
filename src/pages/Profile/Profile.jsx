@@ -13,15 +13,10 @@ const Profile = () => {
   const { user, setLoading, logOutUser } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  const {
-    data: databaseUser = [],
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ['users'],
+  const { data: databaseUser = [], isLoading } = useQuery({
+    queryKey: ['users', user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/users?email=${user?.email}`);
-      refetch();
       setLoading(false);
       return res.data;
     },

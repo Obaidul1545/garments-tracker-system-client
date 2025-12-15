@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import useAxios from '../../../../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import { Search, Trash2 } from 'lucide-react';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
 import { RiEdit2Fill } from 'react-icons/ri';
+import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 
 const AllProductsManage = () => {
   const [search, setSearch] = useState('');
 
-  const axiosSecure = useAxios();
+  const axiosSecure = useAxiosSecure();
 
   const {
     data: products = [],

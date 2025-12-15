@@ -11,7 +11,7 @@ const ProductsCard = ({ product, index }) => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: index * 0.1 }}
-        className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all group"
+        className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all group"
       >
         <div className="relative overflow-hidden h-64">
           <img
@@ -46,7 +46,7 @@ const ProductsCard = ({ product, index }) => {
 
           <Link
             to={`/product-details/${product._id}`}
-            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#0D9488] text-white rounded-xl hover:bg-[#0D9488]/90 transition-colors"
+            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#0D9488] text-white rounded-md hover:bg-[#0D9488]/90 transition-colors"
           >
             View Details
             <FiArrowRight className="w-4 h-4" />

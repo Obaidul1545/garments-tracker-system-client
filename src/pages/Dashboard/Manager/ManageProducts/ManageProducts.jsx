@@ -7,11 +7,12 @@ import LoadingSpinner from '../../../../components/LoadingSpinner';
 import { Link } from 'react-router';
 import Swal from 'sweetalert2';
 import useAuth from '../../../../hooks/useAuth';
+import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 
 const ManageProducts = () => {
   const { user } = useAuth();
   const [search, setSearch] = useState('');
-  const axiosSecure = useAxios();
+  const axiosSecure = useAxiosSecure();
 
   const {
     data: products = [],

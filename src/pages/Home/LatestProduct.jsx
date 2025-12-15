@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import ProductsCard from '../AllProducts/ProductsCard';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { Link } from 'react-router';
 
 const LatestProduct = () => {
   const axiosSecure = useAxiosSecure();
@@ -46,6 +47,15 @@ const LatestProduct = () => {
             ))}
           </div>
         )}
+
+        <div className="text-center mt-12">
+          <Link
+            to="/all-products"
+            className="inline-block px-8 py-4 bg-[#0D9488] text-white rounded-md hover:bg-[#0D9488]/90 transition-colors"
+          >
+            View All Products
+          </Link>
+        </div>
       </section>
     </div>
   );
