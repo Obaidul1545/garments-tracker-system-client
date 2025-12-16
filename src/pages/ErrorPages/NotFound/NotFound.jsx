@@ -32,27 +32,6 @@ const NotFound = () => {
             Go Back
           </button>
         </div>
-
-        {/* <div className="mt-12 grid grid-cols-3 gap-4 max-w-md mx-auto">
-          <Link
-            to="/"
-            className="p-4 bg-white/10 hover:bg-white/20 rounded-xl transition-colors text-white"
-          >
-            Home
-          </Link>
-          <Link
-            to="/products"
-            className="p-4 bg-white/10 hover:bg-white/20 rounded-xl transition-colors text-white"
-          >
-            Products
-          </Link>
-          <Link
-            to="/login"
-            className="p-4 bg-white/10 hover:bg-white/20 rounded-xl transition-colors text-white"
-          >
-            Login
-          </Link>
-        </div> */}
       </div>
     </div>
   );

@@ -28,6 +28,7 @@ import AllProductsManage from '../pages/Dashboard/Admin/AllProductsManage/AllPro
 import PaymentSuccess from '../pages/Dashboard/Payment/PaymentSuccess';
 import PaymentCancelled from '../pages/Dashboard/Payment/PaymentCancelled';
 import UpdateProduct from '../pages/Dashboard/Manager/ManageProducts/UpdateProduct';
+import TrackingProduct from '../pages/OtherPages/TrackingProduct';
 
 export const router = createBrowserRouter([
   {
@@ -108,6 +109,10 @@ export const router = createBrowserRouter([
       {
         path: 'payment-cancelled',
         element: <PaymentCancelled></PaymentCancelled>,
+      },
+      {
+        path: 'product-track/:trackingId',
+        element: <TrackingProduct></TrackingProduct>,
       },
 
       // buyer only

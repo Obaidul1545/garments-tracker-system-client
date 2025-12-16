@@ -1,25 +1,78 @@
-import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
-import { Eye, Search } from 'lucide-react';
+import { Eye, MapPinPlus, Route, Search } from 'lucide-react';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
+import { useRef, useState } from 'react';
+import Swal from 'sweetalert2';
+import { Link } from 'react-router';
 
 const ApprovedOrders = () => {
-  const [search, setSearch] = useState('');
-  const [sortByStatus, setSortByStatus] = useState('all');
-  const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [status, setStatus] = useState('');
+  const [location, setLocation] = useState('');
+  const [note, setNote] = useState('');
+  const trackingModalRef = useRef();
 
-  // edit korte hobe
-  const { data: orders = [], isLoading } = useQuery({
-    queryKey: ['products', search, sortByStatus],
+  const {
+    data: approvedOrders = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ['approvedOrders'],
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/all-orders?search=${search}&sortBy=${sortByStatus}`
-      );
+      const res = await axiosSecure.get(`/orders/approved`);
       return res.data;
     },
   });
+
+  const handleAddTracking = async () => {
+    trackingModalRef.current.close();
+    Swal.fire({
+      title: 'Tracking Add this order?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#0D9488',
+      customClass: {
+        popup: 'z-[9999]',
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axiosSecure.post('/add-tracking', {
+            trackingId: selectedOrder.trackingId,
+            status,
+            location,
+            note,
+          });
+          Swal.fire('Success', 'Tracking updated', 'success');
+          refetch();
+        } catch (error) {
+          if (error.response?.status === 409) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Duplicate!',
+              text:
+                error.response.data.message ||
+                'This tracking step already exists.',
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error!',
+              text: 'Failed to add tracking',
+            });
+          }
+        }
+      }
+    });
+  };
+
+  const openAddTrackingModal = (order) => {
+    setSelectedOrder(order);
+    trackingModalRef.current.showModal();
+  };
   return (
     <div className="container mx-auto">
       <div className="space-y-6 px-3 sm:px-4 lg:px-4 py-5">
@@ -30,33 +83,6 @@ const ApprovedOrders = () => {
           <p className="text-[#475569]">
             Track approved orders and proceed to the next production stage
           </p>
-        </div>
-
-        <div className="bg-white rounded-md p-6 shadow-md">
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#475569]" />
-              <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search orders..."
-                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#0D9488] focus:border-transparent outline-none transition-all"
-              />
-            </div>
-            <select
-              value={sortByStatus}
-              onChange={(e) => setSortByStatus(e.target.value)}
-              className="px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#0D9488] focus:border-transparent outline-none transition-all"
-            >
-              <option value="all">All Status</option>
-              <option value="pending">Pending</option>
-              <option value="approved">Approved</option>
-              <option value="sewing">In Production</option>
-              <option value="delivered">Delivered</option>
-              <option value="cancelled">Cancelled</option>
-            </select>
-          </div>
         </div>
 
         {isLoading ? (
@@ -90,7 +116,7 @@ const ApprovedOrders = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {orders.map((order, index) => (
+                  {approvedOrders.map((order, index) => (
                     <motion.tr
                       key={order._id}
                       initial={{ opacity: 0 }}
@@ -121,22 +147,32 @@ const ApprovedOrders = () => {
                       </td>
                       <td className="px-6 py-4">
                         <div className="text-[#0D9488]">
-                          ${order.totalPrice}
+                          ${order.totalPrice.toFixed(2)}
                         </div>
                       </td>
 
                       <td className="px-6 py-4">
                         <div className="text-[#475569]">
-                          {new Date(order.createdAt).toLocaleDateString(
+                          {new Date(order.approvedAt).toLocaleDateString(
                             'en-GB'
                           )}
                         </div>
                       </td>
-                      <td className="px-6 py-4">
-                        <button className="flex-1 lg:flex-none px-4 py-2 bg-[#0D9488] text-white rounded-xl hover:bg-[#0D9488]/90 transition-colors flex items-center  justify-center gap-2 cursor-pointer">
-                          <Eye className="w-5 h-5" />
-                          Track
+                      <td className="px-6 py-4 flex flex-col gap-1  ">
+                        <button
+                          onClick={() => openAddTrackingModal(order)}
+                          className="btn btn-sm bg-[#0D9488] text-white hover:bg-[#0D9488]/90 items-center  justify-center gap-2 cursor-pointer"
+                        >
+                          <MapPinPlus className="w-5 h-5" />
+                          Add Tracking
                         </button>
+                        <Link
+                          to={`/dashboard/product-track/${order.trackingId}`}
+                          className="btn btn-sm bg-[#0D9488] text-white hover:bg-[#0D9488]/90 items-center  justify-center gap-2 cursor-pointer"
+                        >
+                          <Route className="w-5 h-5" />
+                          View Tracking
+                        </Link>
                       </td>
                     </motion.tr>
                   ))}
@@ -144,7 +180,7 @@ const ApprovedOrders = () => {
               </table>
             </div>
 
-            {orders.length === 0 && (
+            {approvedOrders.length === 0 && (
               <div className="text-center py-12">
                 <p className="text-[#475569]">
                   No pending orders at the moment
@@ -154,6 +190,58 @@ const ApprovedOrders = () => {
           </div>
         )}
       </div>
+
+      <dialog ref={trackingModalRef} className="modal">
+        <div className="modal-box">
+          <h3 className="text-lg text-[#0D9488] font-semibold mb-3">
+            Add Tracking Update
+          </h3>
+
+          <select
+            className="select select-bordered w-full mb-2"
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+          >
+            <option value="">Select Status</option>
+            <option value="Cutting_Completed">Cutting Completed</option>
+            <option value="Sewing_Started">Sewing Started</option>
+            <option value="Dinishing">Finishing</option>
+            <option value="QC_Checked">QC Checked</option>
+            <option value="Packed">Packed</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Out_For_Delivery">Out For Delivery</option>
+          </select>
+
+          <input
+            type="text"
+            placeholder="Location"
+            className="input input-bordered w-full mb-2"
+            onChange={(e) => setLocation(e.target.value)}
+            required
+          />
+
+          <textarea
+            placeholder="Note"
+            className="textarea textarea-bordered w-full"
+            onChange={(e) => setNote(e.target.value)}
+            required
+          />
+
+          <div className="flex items-center justify-between">
+            <button
+              className="btn bg-[#0D9488] text-white mt-6"
+              onClick={handleAddTracking}
+            >
+              Save
+            </button>
+            <div className="modal-action">
+              <form method="dialog">
+                <button className="btn bg-[#EF4444] text-white">Close</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 };
