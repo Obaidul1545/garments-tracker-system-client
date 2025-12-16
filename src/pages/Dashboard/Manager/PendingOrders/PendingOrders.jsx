@@ -58,8 +58,6 @@ const PendingOrders = () => {
     orderModalRef.current.showModal();
   };
 
-  console.log(selectedOrder);
-
   return (
     <div className="container mx-auto">
       <div className="space-y-6 px-3 sm:px-4 lg:px-4 py-5">

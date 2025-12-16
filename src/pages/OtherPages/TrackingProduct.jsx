@@ -16,8 +16,6 @@ const TrackingProduct = () => {
       return res.data;
     },
   });
-  console.log(trackingId);
-  console.log(trackings);
 
   if (isLoading) return <LoadingSpinner />;
   return (
