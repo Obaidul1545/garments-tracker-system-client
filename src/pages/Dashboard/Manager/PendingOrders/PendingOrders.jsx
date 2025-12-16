@@ -5,8 +5,11 @@ import LoadingSpinner from '../../../../components/LoadingSpinner';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
 import { useRef, useState } from 'react';
+import useAuth from '../../../../hooks/useAuth';
+import { toast } from 'react-toastify';
 
 const PendingOrders = () => {
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [selectedOrder, setSelectedOrder] = useState(null);
   const orderModalRef = useRef();
@@ -23,7 +26,18 @@ const PendingOrders = () => {
     },
   });
 
+  const { data: DBUser = {} } = useQuery({
+    queryKey: ['users'],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users?email=${user?.email}`);
+      return res.data;
+    },
+  });
+
   const handleApproved = async (id) => {
+    if (DBUser.accountStatus === 'suspended') {
+      return toast.warning('Your account is currently suspended.');
+    }
     Swal.fire({
       title: 'Approve this order?',
       icon: 'question',
@@ -39,6 +53,9 @@ const PendingOrders = () => {
   };
 
   const handleReject = async (id) => {
+    if (DBUser.accountStatus === 'suspended') {
+      return toast.warning('Your account is currently suspended.');
+    }
     Swal.fire({
       title: 'Reject this order?',
       icon: 'warning',

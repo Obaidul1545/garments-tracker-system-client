@@ -26,7 +26,7 @@ const ManageUsers = () => {
       const res = await axiosSecure.get(
         `/manage-users?search=${search}&role=${role}`
       );
-      refetch();
+
       return res.data;
     },
   });
@@ -44,8 +44,8 @@ const ManageUsers = () => {
         email: selectedUser.email,
         role: updatedRole,
       });
-      toast.success('Role Updated!');
       refetch();
+      toast.success('Role Updated!');
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {
@@ -70,8 +70,8 @@ const ManageUsers = () => {
         email: selectedUser.email,
         accountStatus: updatedStatus,
       });
-      toast.success('Account Status Updated!');
       refetch();
+      toast.success('Account Status Updated!');
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {
@@ -300,7 +300,6 @@ const ManageUsers = () => {
               Update User Account Status
             </h3>
 
-            {/* Role Select */}
             <div className="mb-6">
               <label className="block mb-2 text-[#475569] text-sm font-medium">
                 Account Status
@@ -312,7 +311,7 @@ const ManageUsers = () => {
                 className="w-full border border-gray-300 rounded-md px-3 py-3 
           focus:ring-2 focus:ring-[#0D9488] outline-none"
               >
-                <option value="Active">Active</option>
+                <option value="active">Active</option>
                 <option value="pending">Pending</option>
                 <option value="suspended">Suspended</option>
               </select>

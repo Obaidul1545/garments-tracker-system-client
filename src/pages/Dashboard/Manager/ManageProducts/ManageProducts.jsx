@@ -21,7 +21,7 @@ const ManageProducts = () => {
   } = useQuery({
     queryKey: ['products', search],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/all-products?search=${search}`);
+      const res = await axiosSecure.get(`/products-by-email?search=${search}`);
       return res.data;
     },
   });
@@ -131,7 +131,7 @@ const ManageProducts = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {products.map((product, index) => (
+                  {products?.map((product, index) => (
                     <motion.tr
                       key={product._id}
                       initial={{ opacity: 0 }}
@@ -186,7 +186,7 @@ const ManageProducts = () => {
       </div>
 
       {/* No Results */}
-      {products.length === 0 && (
+      {products?.length === 0 && (
         <div className="text-center py-20">
           <p className="text-[#475569] mb-4">
             No products found matching your search.

@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import useAuth from '../../../../hooks/useAuth';
 import { useNavigate } from 'react-router';
+import { useQuery } from '@tanstack/react-query';
 
 const AddProduct = () => {
   const { user } = useAuth();
@@ -14,6 +15,14 @@ const AddProduct = () => {
   const [images, setImages] = useState([]);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
+
+  const { data: DBUser = {} } = useQuery({
+    queryKey: ['users'],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users?email=${user?.email}`);
+      return res.data;
+    },
+  });
 
   const handleSelectImages = (e) => {
     const newFiles = Array.from(e.target.files);
@@ -24,6 +33,9 @@ const AddProduct = () => {
   };
 
   const handleAddProduct = async (data) => {
+    if (DBUser.accountStatus === 'suspended') {
+      return toast.warning('Your account is currently suspended.');
+    }
     try {
       const uploadedUrls = [];
       for (const img of images) {

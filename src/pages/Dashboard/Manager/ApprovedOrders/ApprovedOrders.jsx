@@ -6,6 +6,7 @@ import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import { useRef, useState } from 'react';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router';
+import { Helmet } from 'react-helmet';
 
 const ApprovedOrders = () => {
   const axiosSecure = useAxiosSecure();
@@ -75,6 +76,9 @@ const ApprovedOrders = () => {
   };
   return (
     <div className="container mx-auto">
+      <Helmet>
+        <title>Approved Orders - Garments Tracker</title>
+      </Helmet>
       <div className="space-y-6 px-3 sm:px-4 lg:px-4 py-5">
         <div>
           <h1 className="text-[#0F172A] text-3xl font-semibold mb-2">

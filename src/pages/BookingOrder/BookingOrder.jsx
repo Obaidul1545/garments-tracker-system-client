@@ -8,6 +8,7 @@ import useAuth from '../../hooks/useAuth';
 import { useForm, useWatch } from 'react-hook-form';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
 
 const BookingOrder = () => {
   const { user } = useAuth();
@@ -28,6 +29,13 @@ const BookingOrder = () => {
       return res.data;
     },
   });
+  const { data: DBUser = {} } = useQuery({
+    queryKey: ['users'],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users?email=${user?.email}`);
+      return res.data;
+    },
+  });
 
   const quantity = useWatch({
     control,
@@ -38,6 +46,9 @@ const BookingOrder = () => {
   const totalPrice = quantity * product.price;
 
   const handleSubmitOrder = async (data) => {
+    if (DBUser.accountStatus === 'suspended') {
+      return toast.warning('Your account is currently suspended.');
+    }
     const orderData = {
       ...data,
       productTitle: product.title,

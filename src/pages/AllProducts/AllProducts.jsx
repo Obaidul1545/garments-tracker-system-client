@@ -8,15 +8,22 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const AllProducts = () => {
   const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
+  const limit = 9;
   const axiosSecure = useAxiosSecure();
 
-  const { data: products = [], isLoading } = useQuery({
-    queryKey: ['products', search],
+  const { data: productsData = {}, isLoading } = useQuery({
+    queryKey: ['products', search, page],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/all-products?search=${search}`);
+      const res = await axiosSecure.get(
+        `/all-products/display?search=${search}&page=${page}&limit=${limit}`
+      );
       return res.data;
     },
   });
+  const products = productsData.result || [];
+
+  const totalPages = productsData ? Math.ceil(productsData.total / limit) : 0;
 
   return (
     <div>
@@ -44,7 +51,7 @@ const AllProducts = () => {
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search products by name, category..."
-                  className="w-full pl-12 pr-4 py-3 bg-white border border-gray-300 rounded-2xl focus:ring-2 focus:ring-[#0D9488] focus:border-transparent outline-none transition-all"
+                  className="w-full pl-12 pr-4 py-3 bg-white border border-gray-300 rounded-md focus:ring-2 focus:ring-[#0D9488] focus:border-transparent outline-none transition-all"
                 />
               </div>
             </div>
@@ -53,7 +60,7 @@ const AllProducts = () => {
           {/* Products Count */}
           <div className="mb-6">
             <p className="text-[#475569]">
-              Showing {products.length} of {products.length} products
+              Showing {products?.length} products
             </p>
           </div>
 
@@ -62,13 +69,43 @@ const AllProducts = () => {
             <LoadingSpinner></LoadingSpinner>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {products.map((product, index) => (
+              {products?.map((product, index) => (
                 <ProductsCard
                   key={product._id}
                   product={product}
                   index={index}
                 ></ProductsCard>
               ))}
+            </div>
+          )}
+
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center gap-5 mt-10">
+              <button
+                className="px-4 py-2 cursor-pointer bg-gray-200 rounded hover:bg-gray-300"
+                disabled={page === 1}
+                onClick={() => setPage((prev) => prev - 1)}
+              >
+                Prev
+              </button>
+              {Array.from({ length: totalPages }).map((_, i) => (
+                <button
+                  key={i}
+                  className={`px-4 py-2 cursor-pointer rounded ${
+                    page === i + 1 ? 'bg-[#0D9488] text-white' : 'bg-gray-200'
+                  }`}
+                  onClick={() => setPage(i + 1)}
+                >
+                  {i + 1}
+                </button>
+              ))}
+              <button
+                className="px-4 py-2 cursor-pointer bg-gray-200 rounded hover:bg-gray-300"
+                disabled={page === totalPages}
+                onClick={() => setPage((prev) => prev + 1)}
+              >
+                Next
+              </button>
             </div>
           )}
 
