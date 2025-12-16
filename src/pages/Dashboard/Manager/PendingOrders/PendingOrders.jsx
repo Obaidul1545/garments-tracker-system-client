@@ -3,9 +3,13 @@ import { useQuery } from '@tanstack/react-query';
 import { CheckCircle, Eye, XCircle } from 'lucide-react';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
+import Swal from 'sweetalert2';
+import { useRef, useState } from 'react';
 
 const PendingOrders = () => {
   const axiosSecure = useAxiosSecure();
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const orderModalRef = useRef();
 
   const {
     data: pendingOrders = [],
@@ -15,10 +19,46 @@ const PendingOrders = () => {
     queryKey: ['pendingOrders'],
     queryFn: async () => {
       const res = await axiosSecure.get(`/orders/pending`);
-      refetch();
       return res.data;
     },
   });
+
+  const handleApproved = async (id) => {
+    Swal.fire({
+      title: 'Approve this order?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#0D9488',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await axiosSecure.patch(`/orders/${id}/approved`);
+        Swal.fire('Approved!', 'Order approved successfully.', 'success');
+        refetch();
+      }
+    });
+  };
+
+  const handleReject = async (id) => {
+    Swal.fire({
+      title: 'Reject this order?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#EF4444',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await axiosSecure.patch(`/orders/${id}/reject`);
+        Swal.fire('Rejected!', 'Order rejected.', 'success');
+        refetch();
+      }
+    });
+  };
+
+  const openDetailsModal = (order) => {
+    setSelectedOrder(order);
+    orderModalRef.current.showModal();
+  };
+
+  console.log(selectedOrder);
 
   return (
     <div className="container mx-auto">
@@ -105,13 +145,22 @@ const PendingOrders = () => {
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
-                          <button title="Approve Order">
+                          <button
+                            onClick={() => handleApproved(order._id)}
+                            title="Approve Order"
+                          >
                             <CheckCircle className="w-5 h-5 text-green-600 cursor-pointer" />
                           </button>
-                          <button title="Reject Order">
+                          <button
+                            onClick={() => handleReject(order._id)}
+                            title="Reject Order"
+                          >
                             <XCircle className="w-5 h-5 text-red-600 cursor-pointer" />
                           </button>
-                          <button title="View Order">
+                          <button
+                            onClick={() => openDetailsModal(order)}
+                            title="View Order"
+                          >
                             <Eye className="w-5 h-5 text-blue-600 cursor-pointer" />
                           </button>
                         </div>
@@ -132,6 +181,109 @@ const PendingOrders = () => {
           </div>
         )}
       </div>
+
+      <dialog
+        ref={orderModalRef}
+        className="modal modal-bottom sm:modal-middle"
+      >
+        {selectedOrder && (
+          <div className="modal-box max-w-2xl">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-teal-800">
+                Order Details
+              </h2>
+              <span className="px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-700">
+                {selectedOrder.status}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 text-sm mb-4">
+              <div>
+                <p className="font-semibold">Order ID</p>
+                <p className="font-medium">{selectedOrder.orderId}</p>
+              </div>
+              <div>
+                <p className="font-semibold">Tracking ID</p>
+                <p className="font-medium">{selectedOrder.trackingId}</p>
+              </div>
+              <div>
+                <p className="font-semibold">Order Date</p>
+                <p className="font-medium">
+                  {new Date(selectedOrder.createdAt).toLocaleDateString(
+                    'en-GB'
+                  )}
+                </p>
+              </div>
+              {selectedOrder.approvedAt && (
+                <div>
+                  <p className="font-semibold">Approved At</p>
+                  <p className="font-medium">
+                    {new Date(selectedOrder.approvedAt).toLocaleDateString(
+                      'en-GB'
+                    )}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            <hr className="my-4 text-gray-500" />
+
+            <div className="mb-4">
+              <h3 className="font-semibold text-teal-700 mb-2">
+                Customer Information
+              </h3>
+              <div className="text-sm space-y-1">
+                <p>
+                  <span className="font-semibold">Name:</span>{' '}
+                  {selectedOrder.firstName} {selectedOrder.lastName}
+                </p>
+                <p>
+                  <span className="font-semibold">Email:</span>{' '}
+                  {selectedOrder.email}
+                </p>
+                <p>
+                  <span className="font-semibold">Phone:</span>{' '}
+                  {selectedOrder.contactNumber}
+                </p>
+                <p>
+                  <span className="font-semibold">Address:</span>{' '}
+                  {selectedOrder.deliveryAddress}
+                </p>
+              </div>
+            </div>
+
+            <hr className="my-4 text-gray-500" />
+
+            <div className="mb-4">
+              <h3 className="font-semibold text-teal-700 mb-2">
+                Product Information
+              </h3>
+              <div className="text-sm space-y-1">
+                <p>
+                  <span className="font-semibold">Product:</span>{' '}
+                  {selectedOrder.productTitle}
+                </p>
+                <p>
+                  <span className="font-semibold">Quantity:</span>{' '}
+                  {selectedOrder.quantity} units
+                </p>
+                <p>
+                  <span className="font-semibold">Total Price:</span>{' '}
+                  <span className="text-emerald-600 font-semibold">
+                    ${selectedOrder.totalPrice.toFixed(2)}
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div className="modal-action">
+              <form method="dialog">
+                <button className="btn bg-[#EF4444] text-white">Close</button>
+              </form>
+            </div>
+          </div>
+        )}
+      </dialog>
     </div>
   );
 };
