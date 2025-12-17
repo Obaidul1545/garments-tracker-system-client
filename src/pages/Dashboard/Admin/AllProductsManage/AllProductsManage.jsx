@@ -6,13 +6,15 @@ import LoadingSpinner from '../../../../components/LoadingSpinner';
 import { RiEdit2Fill } from 'react-icons/ri';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
+import Swal from 'sweetalert2';
 
 const AllProductsManage = () => {
   const [search, setSearch] = useState('');
   const [loadingId, setLoadingId] = useState(null);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     data: products = [],
@@ -39,6 +41,54 @@ const AllProductsManage = () => {
       console.error(error);
       toast.error('Failed to update');
     }
+  };
+
+  const handleDeleteProduct = (id) => {
+    Swal.fire({
+      title: 'Delete Product?',
+      text: 'This action cannot be undone.',
+      icon: 'warning',
+      background: '#ffffff',
+      color: '#0F172A',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Delete',
+      cancelButtonText: 'Cancel',
+      confirmButtonColor: '#0D9488',
+      cancelButtonColor: '#d33',
+      reverseButtons: true,
+      customClass: {
+        popup: 'rounded-2xl shadow-xl',
+        confirmButton: 'px-6 py-2 rounded-xl font-semibold',
+        cancelButton: 'px-6 py-2 rounded-xl font-semibold text-slate-700',
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await axiosSecure.delete(`/product/${id}`);
+
+          if (res.data.deletedCount) {
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'Product has been removed successfully.',
+              icon: 'success',
+              confirmButtonColor: '#0D9488',
+              customClass: {
+                popup: 'rounded-2xl shadow-xl',
+                confirmButton: 'px-6 py-2 rounded-xl font-semibold',
+              },
+            });
+            refetch();
+          }
+        } catch (error) {
+          Swal.fire({
+            title: 'Failed!',
+            text: 'Could not delete product.',
+            icon: 'error',
+            confirmButtonColor: '#EF4444',
+          });
+        }
+      }
+    });
   };
 
   return (
@@ -149,7 +199,10 @@ const AllProductsManage = () => {
                           <button
                             onClick={() =>
                               navigate(
-                                `/dashboard/update-product/${product._id}`
+                                `/dashboard/update-product/${product._id}`,
+                                {
+                                  state: { from: location.pathname },
+                                }
                               )
                             }
                             className="p-2 text-[#0D9488] hover:bg-[#0D9488]/10 rounded-lg transition-colors"
@@ -158,8 +211,8 @@ const AllProductsManage = () => {
                             <RiEdit2Fill className="w-5 h-5" />
                           </button>
                           <button
-                            // onClick={() => handleDelete(product.id)}
-                            className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            onClick={() => handleDeleteProduct(product._id)}
+                            className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
                             title="Delete Product"
                           >
                             <Trash2 className="w-5 h-5" />

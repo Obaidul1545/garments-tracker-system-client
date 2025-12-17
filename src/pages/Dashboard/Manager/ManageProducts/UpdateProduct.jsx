@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useParams, useNavigate, Link } from 'react-router';
+import { useParams, useNavigate, Link, useLocation } from 'react-router';
 import { toast } from 'react-toastify';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
@@ -20,6 +20,7 @@ const UpdateProduct = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
+  const location = useLocation();
 
   const { register, handleSubmit } = useForm();
 
@@ -48,6 +49,7 @@ const UpdateProduct = () => {
     setNewImages((prev) => prev.filter((_, i) => i !== index));
   };
 
+  const from = location.state?.from || '/dashboard';
   const handleUpdateProduct = async (data) => {
     try {
       const uploadedUrls = [];
@@ -69,7 +71,7 @@ const UpdateProduct = () => {
 
       await axiosSecure.patch(`/product/${productId}`, updatedProduct);
       toast.success('Product updated successfully!');
-      navigate('/dashboard/manage-products');
+      navigate(from);
     } catch (error) {
       console.error(error);
       toast.error('Failed to update product');

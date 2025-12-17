@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import useAxios from '../../../../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import { Edit2, PlusCircle, Search, Trash2 } from 'lucide-react';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 import Swal from 'sweetalert2';
 import useAuth from '../../../../hooks/useAuth';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
@@ -13,6 +12,7 @@ const ManageProducts = () => {
   const { user } = useAuth();
   const [search, setSearch] = useState('');
   const axiosSecure = useAxiosSecure();
+  const location = useLocation();
 
   const {
     data: products = [],
@@ -27,7 +27,6 @@ const ManageProducts = () => {
   });
 
   const handleDeleteProduct = (id) => {
-    console.log('Access token:', user?.accessToken);
     Swal.fire({
       title: 'Delete Product?',
       text: 'This action cannot be undone.',
@@ -161,7 +160,8 @@ const ManageProducts = () => {
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
                           <Link
-                            to={`/dashboard/update-product/${product._id}`}
+                            to={`/dashboard/update-product/${product._id},`}
+                            state={{ from: location.pathname }}
                             className="p-2 text-[#0D9488] hover:bg-[#0D9488]/10 rounded-lg transition-colors"
                             title="Update product"
                           >
