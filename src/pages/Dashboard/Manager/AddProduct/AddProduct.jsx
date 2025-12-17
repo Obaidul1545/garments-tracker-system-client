@@ -58,7 +58,7 @@ const AddProduct = () => {
         images: uploadedUrls,
         demoVideo: data.demoVideo || null,
         paymentOptions: data.paymentOptions,
-        showOnHome: data.showOnHome || false,
+        showOnHome: false,
         createdBy: 'Manager User',
         createdByEmail: user?.email,
         createdAt: new Date(),
@@ -258,7 +258,7 @@ const AddProduct = () => {
               </select>
             </div>
 
-            <div className="flex items-center gap-3">
+            {/* <div className="flex items-center gap-3">
               <input
                 type="checkbox"
                 id="showOnHome"
@@ -268,7 +268,7 @@ const AddProduct = () => {
               <label htmlFor="showOnHome" className="text-[#0F172A]">
                 Show this product on the homepage
               </label>
-            </div>
+            </div> */}
 
             <div className=" pt-4">
               <button

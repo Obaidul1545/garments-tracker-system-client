@@ -79,13 +79,13 @@ const UpdateProduct = () => {
   if (isLoading) return <LoadingSpinner />;
   return (
     <div className="container mx-auto px-3 py-5">
-      <Link
-        to={'/dashboard/manage-products'}
-        className="inline-flex items-center gap-2 text-[#475569] hover:text-[#0D9488] mb-8 transition-colors"
+      <button
+        onClick={() => navigate(-1)}
+        className="inline-flex items-center gap-2 text-[#475569] hover:text-[#0D9488] mb-8 transition-colors cursor-pointer"
       >
         <ArrowLeft className="w-4 h-4" />
         Back to Products
-      </Link>
+      </button>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

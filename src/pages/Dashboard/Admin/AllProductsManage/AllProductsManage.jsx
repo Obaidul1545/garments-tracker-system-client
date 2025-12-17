@@ -5,19 +5,41 @@ import { Search, Trash2 } from 'lucide-react';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
 import { RiEdit2Fill } from 'react-icons/ri';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
+import { toast } from 'react-toastify';
+import { Link, useNavigate } from 'react-router';
 
 const AllProductsManage = () => {
   const [search, setSearch] = useState('');
-
+  const [loadingId, setLoadingId] = useState(null);
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
-  const { data: products = [], isLoading } = useQuery({
+  const {
+    data: products = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ['products', search],
     queryFn: async () => {
       const res = await axiosSecure.get(`/all-products?search=${search}`);
       return res.data;
     },
   });
+
+  const handleToggleShowOnHome = async (product) => {
+    try {
+      setLoadingId(product._id);
+      await axiosSecure.patch(`/products/${product._id}/show-on-home`, {
+        showOnHome: !product.showOnHome,
+      });
+      setLoadingId(null);
+      toast.success(product.showOnHome ? 'Removed from Home' : 'Added to Home');
+      refetch();
+    } catch (error) {
+      console.error(error);
+      toast.error('Failed to update');
+    }
+  };
 
   return (
     <div className="container mx-auto">
@@ -107,10 +129,11 @@ const AllProductsManage = () => {
                       </td>
                       <td className="px-6 py-4">
                         <button
-                          // onClick={() => toggleShowOnHome(product.id)}
-                          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                          onClick={() => handleToggleShowOnHome(product)}
+                          disabled={loadingId === product._id}
+                          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
                             product.showOnHome ? 'bg-[#0D9488]' : 'bg-gray-300'
-                          }`}
+                          } ${loadingId === product._id ? 'opacity-50' : ''}`}
                         >
                           <span
                             className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
@@ -124,15 +147,20 @@ const AllProductsManage = () => {
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
                           <button
+                            onClick={() =>
+                              navigate(
+                                `/dashboard/update-product/${product._id}`
+                              )
+                            }
                             className="p-2 text-[#0D9488] hover:bg-[#0D9488]/10 rounded-lg transition-colors"
-                            title="Edit"
+                            title="Update Product"
                           >
                             <RiEdit2Fill className="w-5 h-5" />
                           </button>
                           <button
                             // onClick={() => handleDelete(product.id)}
                             className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                            title="Delete"
+                            title="Delete Product"
                           >
                             <Trash2 className="w-5 h-5" />
                           </button>

@@ -114,6 +114,10 @@ export const router = createBrowserRouter([
         path: 'product-track/:trackingId',
         element: <TrackingProduct></TrackingProduct>,
       },
+      {
+        path: 'update-product/:productId',
+        element: <UpdateProduct></UpdateProduct>,
+      },
 
       // buyer only
       {
@@ -142,14 +146,7 @@ export const router = createBrowserRouter([
           </ManagerRoute>
         ),
       },
-      {
-        path: 'update-product/:productId',
-        element: (
-          <ManagerRoute>
-            <UpdateProduct></UpdateProduct>
-          </ManagerRoute>
-        ),
-      },
+
       {
         path: 'pending-orders',
         element: (
