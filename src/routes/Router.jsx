@@ -6,7 +6,6 @@ import AuthLayout from '../layouts/AuthLayout';
 import Login from '../pages/Auth/Login/Login';
 import Register from '../pages/Auth/Register/Register';
 import DashboardLayout from '../layouts/DashboardLayout';
-import DashboardHome from '../pages/Dashboard/DashboardContent/DashboardContent';
 import AboutUs from '../pages/OtherPages/AboutUs';
 import Contact from '../pages/OtherPages/Contact';
 import AllProducts from '../pages/AllProducts/AllProducts';
@@ -30,6 +29,7 @@ import PaymentCancelled from '../pages/Dashboard/Payment/PaymentCancelled';
 import UpdateProduct from '../pages/Dashboard/Manager/ManageProducts/UpdateProduct';
 import TrackingProduct from '../pages/OtherPages/TrackingProduct';
 import OrderDetails from '../pages/Dashboard/Admin/AllOrders/OrderDetails';
+import DashboardHome from '../pages/Dashboard/DashboardHome/DashboardHome';
 
 export const router = createBrowserRouter([
   {
@@ -97,7 +97,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <DashboardHome></DashboardHome>,
+        element: <DashboardHome />,
       },
       {
         path: 'profile',
