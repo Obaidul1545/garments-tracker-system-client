@@ -1,10 +1,8 @@
-import React from 'react';
-import { BiPhoneCall } from 'react-icons/bi';
-import { BsMailbox } from 'react-icons/bs';
-import { FaMapMarkerAlt, FaMapPin, FaPhoneVolume } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaPhoneVolume } from 'react-icons/fa';
 import { RiMailSendFill } from 'react-icons/ri';
 import { Link } from 'react-router';
 import useAuth from '../hooks/useAuth';
+import logoImg from '../assets/logo_footer.png';
 
 const Footer = () => {
   const { user } = useAuth();
@@ -15,10 +13,9 @@ const Footer = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-10 h-10 bg-linear-to-br from-[#0D9488] to-[#2DD4BF] rounded-lg flex items-center justify-center">
-                  <span>GT</span>
-                </div>
-                <span>Garments Tracker</span>
+                <Link to={'/'}>
+                  <img src={logoImg} alt="" className="w-25" />
+                </Link>
               </div>
               <p className="text-gray-400 mb-4">
                 Smart Garments Production & Order Tracking System for modern

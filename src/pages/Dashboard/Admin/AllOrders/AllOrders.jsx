@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Eye, Search } from 'lucide-react';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
+import { Link } from 'react-router';
 
 const AllOrders = () => {
   const [search, setSearch] = useState('');
@@ -11,10 +12,10 @@ const AllOrders = () => {
   const axiosSecure = useAxiosSecure();
 
   const { data: orders = [], isLoading } = useQuery({
-    queryKey: ['products', search, sortByStatus],
+    queryKey: ['orders', search, sortByStatus],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/all-orders?search=${search}&sortBy=${sortByStatus}`
+        `/all-orders?search=${search}&sortByStatus=${sortByStatus}`
       );
       return res.data;
     },
@@ -50,10 +51,10 @@ const AllOrders = () => {
             >
               <option value="all">All Status</option>
               <option value="pending">Pending</option>
-              <option value="approved">Approved</option>
-              <option value="sewing">In Production</option>
-              <option value="delivered">Delivered</option>
-              <option value="cancelled">Cancelled</option>
+              <option value="Approved">Approved</option>
+              <option value="Delivered">Delivered</option>
+              <option value="Cancelled">Cancelled</option>
+              <option value="Rejected">Rejected</option>
             </select>
           </div>
         </div>
@@ -120,7 +121,7 @@ const AllOrders = () => {
                       </td>
                       <td className="px-6 py-4">
                         <div className="text-[#0D9488]">
-                          ${order.totalPrice}
+                          ${order.totalPrice.toFixed(2)}
                         </div>
                       </td>
                       <td className="px-6 py-4">
@@ -128,13 +129,15 @@ const AllOrders = () => {
                           className={`px-3 py-1 rounded-full ${
                             order.status === 'pending'
                               ? 'bg-yellow-100 text-yellow-700'
-                              : order.status === 'approved'
+                              : order.status === 'Approved'
                               ? 'bg-blue-100 text-blue-700'
-                              : order.status === 'sewing'
+                              : order.status === 'Sewing'
                               ? 'bg-indigo-100 text-indigo-700'
-                              : order.status === 'delivered'
+                              : order.status === 'Delivered'
                               ? 'bg-green-100 text-green-700'
-                              : order.status === 'cancelled'
+                              : order.status === 'Cancelled'
+                              ? 'bg-red-100 text-red-700'
+                              : order.status === 'Rejected'
                               ? 'bg-red-100 text-red-700'
                               : 'bg-gray-100 text-gray-700'
                           }`}
@@ -150,12 +153,13 @@ const AllOrders = () => {
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <button
-                          className="p-2 text-[#0D9488] hover:bg-[#0D9488]/10 rounded-lg transition-colors"
+                        <Link
+                          to={`/dashboard/order/${order._id}`}
+                          className="p-2 text-teal-500 hover:text-teal-800 rounded-lg transition-colors"
                           title="View"
                         >
                           <Eye className="w-5 h-5" />
-                        </button>
+                        </Link>
                       </td>
                     </motion.tr>
                   ))}

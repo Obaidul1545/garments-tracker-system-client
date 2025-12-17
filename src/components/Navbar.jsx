@@ -6,6 +6,7 @@ import LoadingSpinner from './LoadingSpinner';
 import { BiUser } from 'react-icons/bi';
 import { toast } from 'react-toastify';
 import { Menu } from 'lucide-react';
+import logoImg from '../assets/logo.png';
 
 const Navbar = () => {
   const { user, loading, logOutUser } = useAuth();
@@ -155,7 +156,7 @@ const Navbar = () => {
             </ul>
           </div>
           <Link to={'/'} className="text-xl font-semibold">
-            Garments Tracker
+            <img src={logoImg} alt="logo.png" className="w-25" />
           </Link>
         </div>
         <div className="hidden lg:flex">

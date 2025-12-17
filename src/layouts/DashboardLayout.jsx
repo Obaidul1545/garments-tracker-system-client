@@ -1,31 +1,16 @@
-import { useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router';
 import useRole from '../hooks/useRole';
 import {
-  CircleEllipsis,
   CirclePlus,
-  CreditCard,
-  CreditCardIcon,
   Home,
-  Menu,
   PanelRightOpen,
-  ShoppingBasket,
   ShoppingCart,
   SquareChartGantt,
-  Truck,
-  TruckElectric,
   User,
 } from 'lucide-react';
-import {
-  FaCheckCircle,
-  FaListAlt,
-  FaMotorcycle,
-  FaTasks,
-  FaUsers,
-} from 'react-icons/fa';
-import { BiTask } from 'react-icons/bi';
+import { FaCheckCircle, FaListAlt, FaUsers } from 'react-icons/fa';
 import { TbLayoutGridFilled, TbPackageExport } from 'react-icons/tb';
-import { RiProfileFill } from 'react-icons/ri';
+import { RiDashboardHorizontalFill, RiProfileFill } from 'react-icons/ri';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { MdPendingActions } from 'react-icons/md';
@@ -69,8 +54,8 @@ const DashboardLayout = () => {
           <div className="flex min-h-full flex-col bg-[#0F172A] text-white is-drawer-close:w-20 is-drawer-open:w-64">
             <ul className="menu w-full grow p-3 space-y-4">
               <li>
-                <Link to={'/'}>
-                  <img src={'❤'} className="w-10" />
+                <Link to={'/'} className="text-gray-200">
+                  <RiDashboardHorizontalFill size={26} />
                   <span className="is-drawer-close:hidden text-2xl font-semibold">
                     Garments
                   </span>

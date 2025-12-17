@@ -29,6 +29,7 @@ import PaymentSuccess from '../pages/Dashboard/Payment/PaymentSuccess';
 import PaymentCancelled from '../pages/Dashboard/Payment/PaymentCancelled';
 import UpdateProduct from '../pages/Dashboard/Manager/ManageProducts/UpdateProduct';
 import TrackingProduct from '../pages/OtherPages/TrackingProduct';
+import OrderDetails from '../pages/Dashboard/Admin/AllOrders/OrderDetails';
 
 export const router = createBrowserRouter([
   {
@@ -186,6 +187,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <AllOrders></AllOrders>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'order/:orderId',
+        element: (
+          <AdminRoute>
+            <OrderDetails></OrderDetails>
           </AdminRoute>
         ),
       },
