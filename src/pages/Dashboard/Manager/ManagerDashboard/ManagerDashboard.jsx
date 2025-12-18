@@ -1,12 +1,42 @@
 import { CheckCircle, Clock, Package, ShoppingCart } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router';
+import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../../../../hooks/useAxiosSecure';
+import LoadingSpinner from '../../../../components/LoadingSpinner';
 
 const ManagerDashboard = () => {
+  const axiosSecure = useAxiosSecure();
+
+  const { data: products = [], isLoading: productsLoading } = useQuery({
+    queryKey: ['products'],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/products-by-email`);
+      return res.data;
+    },
+  });
+
+  const { data: pendingOrders = [], isLoading: ordersLoading } = useQuery({
+    queryKey: ['pendingOrders'],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/orders/pending`);
+      return res.data;
+    },
+  });
+
+  const { data: approvedOrders = [], isLoading: approvedLoading } = useQuery({
+    queryKey: ['approvedOrders'],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/orders/approved`);
+      return res.data;
+    },
+  });
+
   const stats = [
     {
       icon: Package,
       label: 'My Products',
-      value: '45',
+      value: products.length,
       color: 'from-[#0D9488] to-[#2DD4BF]',
     },
     {
@@ -18,19 +48,23 @@ const ManagerDashboard = () => {
     {
       icon: Clock,
       label: 'Pending Approval',
-      value: '12',
+      value: pendingOrders.length,
       color: 'from-yellow-500 to-yellow-600',
     },
     {
       icon: CheckCircle,
       label: 'Completed',
-      value: '98',
+      value: approvedOrders.length,
       color: 'from-green-500 to-green-600',
     },
   ];
+
+  if (productsLoading || ordersLoading || approvedLoading) {
+    return <LoadingSpinner />;
+  }
   return (
     <div>
-      <div className="space-y-8 container mx-auto my-8">
+      <div className="space-y-8 min-h-screen container mx-auto my-8 px-2 md:px-5">
         <div>
           <h1 className="text-[#0F172A] text-2xl font-semibold mb-2">
             Manager Dashboard
@@ -108,24 +142,30 @@ const ManagerDashboard = () => {
           >
             <h2 className="text-white mb-6">Quick Actions</h2>
             <div className="space-y-3">
-              <a
-                href="/dashboard/manager/add-product"
+              <Link
+                to={'/dashboard/add-product'}
                 className="block p-4 bg-white/10 hover:bg-white/20 rounded-xl transition-colors"
               >
                 Add New Product
-              </a>
-              <a
-                href="/dashboard/manager/pending-orders"
-                className="block p-4 bg-white/10 hover:bg-white/20 rounded-xl transition-colors"
-              >
-                Review Pending Orders
-              </a>
-              <a
-                href="/dashboard/manager/products"
+              </Link>
+              <Link
+                to={'/dashboard/manage-products'}
                 className="block p-4 bg-white/10 hover:bg-white/20 rounded-xl transition-colors"
               >
                 Manage Products
-              </a>
+              </Link>
+              <Link
+                to={'/dashboard/pending-orders'}
+                className="block p-4 bg-white/10 hover:bg-white/20 rounded-xl transition-colors"
+              >
+                Review Pending Orders
+              </Link>
+              <Link
+                to={'/dashboard/manage-products'}
+                className="block p-4 bg-white/10 hover:bg-white/20 rounded-xl transition-colors"
+              >
+                Approved Orders
+              </Link>
             </div>
           </motion.div>
         </div>

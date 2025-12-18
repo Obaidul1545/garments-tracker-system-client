@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
-import { Link, useNavigate, useParams } from 'react-router';
-import { ArrowLeft, MapPin, Route } from 'lucide-react';
+import { useNavigate, useParams } from 'react-router';
+import { ArrowLeft, MapPin } from 'lucide-react';
 
 const OrderDetails = () => {
   const axiosSecure = useAxiosSecure();
@@ -17,7 +17,7 @@ const OrderDetails = () => {
       return res.data;
     },
   });
-  console.log(order);
+
   const trackingId = order.trackingId;
 
   const { data: trackings = [] } = useQuery({

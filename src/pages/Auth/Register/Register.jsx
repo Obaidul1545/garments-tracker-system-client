@@ -44,11 +44,7 @@ const Register = () => {
           };
           // database
 
-          axiosSecure.post('/users', userInfo).then((res) => {
-            if (res.data.insertedId) {
-              console.log('create user in database');
-            }
-          });
+          axiosSecure.post('/users', userInfo).then(() => {});
 
           // update
           const userProfile = {

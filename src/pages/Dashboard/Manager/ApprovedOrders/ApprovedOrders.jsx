@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
-import { Eye, MapPinPlus, Route, Search } from 'lucide-react';
+import { MapPinPlus, Route, Search } from 'lucide-react';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import { useRef, useState } from 'react';

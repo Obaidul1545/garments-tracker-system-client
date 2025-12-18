@@ -78,7 +78,6 @@ const BookingOrder = () => {
       if (result.isConfirmed) {
         const res = await axiosSecure.post('/orders', orderData);
         const savedOrder = res.data;
-        console.log(savedOrder);
 
         if (product.paymentOptions === 'PayFirst') {
           const paymentInfo = {
@@ -95,7 +94,6 @@ const BookingOrder = () => {
             paymentInfo
           );
 
-          console.log(res);
           window.location.href = res.data.url;
           return;
         }

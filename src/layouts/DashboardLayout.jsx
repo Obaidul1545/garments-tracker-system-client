@@ -9,14 +9,14 @@ import {
   User,
 } from 'lucide-react';
 import { FaCheckCircle, FaListAlt, FaUsers } from 'react-icons/fa';
-import { TbLayoutGridFilled, TbPackageExport } from 'react-icons/tb';
-import { RiDashboardHorizontalFill, RiProfileFill } from 'react-icons/ri';
+import { TbLayoutGridFilled } from 'react-icons/tb';
+import { RiDashboardHorizontalFill } from 'react-icons/ri';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { MdPendingActions } from 'react-icons/md';
 
 const DashboardLayout = () => {
-  const { role, roleLoading } = useRole();
+  const { role } = useRole();
 
   const navItemClass = (isActive) =>
     `flex items-center gap-3 p-2 rounded-md shadow-sm transition-all is-drawer-close:tooltip is-drawer-close:tooltip-right 
@@ -25,7 +25,7 @@ const DashboardLayout = () => {
   }`;
 
   return (
-    <div className="min-h-screen bg-[#E2E8F0]">
+    <div className=" bg-[#E2E8F0]">
       <header className="sticky top-0 z-50">
         <Navbar></Navbar>
       </header>

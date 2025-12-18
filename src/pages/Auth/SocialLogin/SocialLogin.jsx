@@ -26,9 +26,7 @@ const SocialLogin = () => {
           navigate(location.state || '/');
         });
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
   };
 
   return (

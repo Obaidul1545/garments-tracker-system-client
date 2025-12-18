@@ -5,11 +5,9 @@ import { Edit2, PlusCircle, Search, Trash2 } from 'lucide-react';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
 import { Link, useLocation } from 'react-router';
 import Swal from 'sweetalert2';
-import useAuth from '../../../../hooks/useAuth';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 
 const ManageProducts = () => {
-  const { user } = useAuth();
   const [search, setSearch] = useState('');
   const axiosSecure = useAxiosSecure();
   const location = useLocation();
