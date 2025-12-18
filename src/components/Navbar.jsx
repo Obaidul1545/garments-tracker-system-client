@@ -141,7 +141,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className=" bg-base-100 shadow-sm">
+    <div className=" bg-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-[5.3px] border border-white/40">
       <div className="navbar container mx-auto p-0 flex justify-between">
         <div className="flex items-center">
           <div className="dropdown">
