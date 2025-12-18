@@ -1,15 +1,8 @@
 import { motion } from 'framer-motion';
-import {
-  ArrowLeft,
-  DollarSign,
-  FileText,
-  ImageIcon,
-  Package,
-  X,
-} from 'lucide-react';
+import { ArrowLeft, ImageIcon, Package, X } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useParams, useNavigate, Link, useLocation } from 'react-router';
+import { useParams, useNavigate, useLocation } from 'react-router';
 import { toast } from 'react-toastify';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
