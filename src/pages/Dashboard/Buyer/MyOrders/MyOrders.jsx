@@ -90,10 +90,15 @@ const MyOrders = () => {
                 >
                   <option value="all">All Status</option>
                   <option value="pending">Pending</option>
-                  <option value="approved">Approved</option>
-                  <option value="sewing">In Production</option>
-                  <option value="delivered">Delivered</option>
-                  <option value="cancelled">Cancelled</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Cutting_Completed">Cutting Completed</option>
+                  <option value="Sewing_Started">Sewing Started</option>
+                  <option value="Finishing">Finishing</option>
+                  <option value="QC_Checked">QC Checked</option>
+                  <option value="Packed">Packed</option>
+                  <option value="Shipped">Shipped</option>
+                  <option value="Out_For_Delivery">Out For Delivery</option>
+                  <option value="Cancelled">Cancelled</option>
                 </select>
               </div>
             </div>
@@ -170,7 +175,7 @@ const MyOrders = () => {
                         </td>
                         <td className="px-6 py-4">
                           <span
-                            className={`px-3 py-1 rounded-full ${
+                            className={`px-3 py-1 rounded-full inline-flex whitespace-nowrap ${
                               order.status === 'pending'
                                 ? 'bg-yellow-100 text-yellow-700'
                                 : order.status === 'Approved'
@@ -194,7 +199,7 @@ const MyOrders = () => {
                                 : 'bg-gray-100 text-gray-700'
                             }`}
                           >
-                            {order.status}
+                            {order.status.split('_').join(' ')}
                           </span>
                         </td>
                         <td className="px-6 py-4">
@@ -247,8 +252,33 @@ const MyOrders = () => {
                 <h2 className="text-xl font-semibold text-teal-800">
                   Order Details
                 </h2>
-                <span className="px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-700">
-                  {selectedOrder.status}
+
+                <span
+                  className={`px-3 py-1 rounded-full inline-flex whitespace-nowrap ${
+                    selectedOrder.status === 'pending'
+                      ? 'bg-yellow-100 text-yellow-700'
+                      : selectedOrder.status === 'Approved'
+                      ? 'bg-blue-100 text-blue-700'
+                      : selectedOrder.status === 'Cutting_Completed'
+                      ? 'bg-orange-100 text-orange-700'
+                      : selectedOrder.status === 'Sewing_Started'
+                      ? 'bg-indigo-100 text-indigo-700'
+                      : selectedOrder.status === 'Finishing'
+                      ? 'bg-purple-100 text-purple-700'
+                      : selectedOrder.status === 'QC_Checked'
+                      ? 'bg-yellow-100 text-yellow-700'
+                      : selectedOrder.status === 'Packed'
+                      ? 'bg-blue-100 text-blue-700'
+                      : selectedOrder.status === 'Shipped'
+                      ? 'bg-cyan-100 text-cyan-700'
+                      : selectedOrder.status === 'Out_For_Delivery'
+                      ? 'bg-green-100 text-green-700'
+                      : selectedOrder.status === 'Cancelled'
+                      ? 'bg-red-100 text-red-700'
+                      : 'bg-gray-100 text-gray-700'
+                  }`}
+                >
+                  {selectedOrder.status.split('_').join(' ')}
                 </span>
               </div>
 

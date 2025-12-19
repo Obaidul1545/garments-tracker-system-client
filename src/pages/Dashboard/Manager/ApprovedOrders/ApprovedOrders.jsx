@@ -172,7 +172,7 @@ const ApprovedOrders = () => {
                         </button>
                         <Link
                           to={`/dashboard/product-track/${order.trackingId}`}
-                          className="btn btn-sm bg-[#0D9488] text-white hover:bg-[#0D9488]/90 items-center  justify-center gap-2 cursor-pointer"
+                          className="btn btn-sm bg-[#0D9488] text-white hover:bg-[#0D9488]/90 items-center  justify-center gap-2 cursor-pointer inline-flex whitespace-nowrap"
                         >
                           <Route className="w-5 h-5" />
                           View Tracking
@@ -209,7 +209,7 @@ const ApprovedOrders = () => {
             <option value="">Select Status</option>
             <option value="Cutting_Completed">Cutting Completed</option>
             <option value="Sewing_Started">Sewing Started</option>
-            <option value="Dinishing">Finishing</option>
+            <option value="Finishing">Finishing</option>
             <option value="QC_Checked">QC Checked</option>
             <option value="Packed">Packed</option>
             <option value="Shipped">Shipped</option>

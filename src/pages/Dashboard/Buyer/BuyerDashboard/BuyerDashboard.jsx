@@ -120,9 +120,31 @@ const BuyerDashboard = () => {
                       ${order.totalPrice.toFixed(2)}
                     </p>
                     <span
-                      className={`px-3 py-1 rounded-full bg-gray-100 text-gray-700`}
+                      className={`px-3 py-1 rounded-full inline-flex whitespace-nowrap ${
+                        order.status === 'pending'
+                          ? 'bg-yellow-100 text-yellow-700'
+                          : order.status === 'Approved'
+                          ? 'bg-blue-100 text-blue-700'
+                          : order.status === 'Cutting_Completed'
+                          ? 'bg-orange-100 text-orange-700'
+                          : order.status === 'Sewing_Started'
+                          ? 'bg-indigo-100 text-indigo-700'
+                          : order.status === 'Finishing'
+                          ? 'bg-purple-100 text-purple-700'
+                          : order.status === 'QC_Checked'
+                          ? 'bg-yellow-100 text-yellow-700'
+                          : order.status === 'Packed'
+                          ? 'bg-blue-100 text-blue-700'
+                          : order.status === 'Shipped'
+                          ? 'bg-cyan-100 text-cyan-700'
+                          : order.status === 'Out_For_Delivery'
+                          ? 'bg-green-100 text-green-700'
+                          : order.status === 'Cancelled'
+                          ? 'bg-red-100 text-red-700'
+                          : 'bg-gray-100 text-gray-700'
+                      }`}
                     >
-                      {order.status}
+                      {order.status.split('_').join(' ')}
                     </span>
                   </div>
                 </div>

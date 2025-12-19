@@ -41,8 +41,8 @@ const ManagerDashboard = () => {
     },
     {
       icon: ShoppingCart,
-      label: 'Total Orders',
-      value: '128',
+      label: 'Total Approved Orders',
+      value: approvedOrders.length,
       color: 'from-blue-500 to-blue-600',
     },
     {
