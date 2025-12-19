@@ -66,7 +66,6 @@ const UpdateProduct = () => {
       toast.success('Product updated successfully!');
       navigate(from);
     } catch (error) {
-      console.error(error);
       toast.error('Failed to update product');
     }
   };
@@ -187,7 +186,7 @@ const UpdateProduct = () => {
 
           <button
             type="submit"
-            className="w-full bg-[#0D9488] text-white py-3 rounded-md"
+            className="w-full bg-[#0D9488] text-white py-3 rounded-md cursor-pointer"
           >
             Update Product
           </button>

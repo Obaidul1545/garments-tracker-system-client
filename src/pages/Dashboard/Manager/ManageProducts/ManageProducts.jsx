@@ -158,7 +158,7 @@ const ManageProducts = () => {
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
                           <Link
-                            to={`/dashboard/update-product/${product._id},`}
+                            to={`/dashboard/update-product/${product._id}`}
                             state={{ from: location.pathname }}
                             className="p-2 text-[#0D9488] hover:bg-[#0D9488]/10 rounded-lg transition-colors"
                             title="Update product"
