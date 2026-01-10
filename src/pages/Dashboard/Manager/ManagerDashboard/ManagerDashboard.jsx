@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
+import PageHeader from '../../../../components/PageHeader';
 
 const ManagerDashboard = () => {
   const axiosSecure = useAxiosSecure();
@@ -66,10 +67,11 @@ const ManagerDashboard = () => {
     <div>
       <div className="space-y-8 min-h-screen container mx-auto my-8 px-2 md:px-5">
         <div>
-          <h1 className="text-[#0F172A] text-2xl font-semibold mb-2">
-            Manager Dashboard
-          </h1>
-          <p className="text-[#475569]">Manage your products and orders</p>
+          <PageHeader
+            title={'Manager Dashboard'}
+            highlight={'Manager'}
+            subtitle={'Manage your products and orders'}
+          ></PageHeader>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

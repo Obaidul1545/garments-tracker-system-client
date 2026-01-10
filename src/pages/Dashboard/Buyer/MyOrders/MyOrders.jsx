@@ -8,6 +8,7 @@ import useAuth from '../../../../hooks/useAuth';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router';
+import PageHeader from '../../../../components/PageHeader';
 
 const MyOrders = () => {
   const { user } = useAuth();
@@ -64,10 +65,11 @@ const MyOrders = () => {
       <div>
         <div className="space-y-6 px-4 sm:px-4 lg:px-4 py-5">
           <div>
-            <h1 className="text-[#0F172A] text-3xl font-semibold mb-2">
-              My Orders
-            </h1>
-            <p className="text-[#475569]">View and track all your orders</p>
+            <PageHeader
+              title={'My Orders'}
+              highlight={'My'}
+              subtitle={'View and track all your orders'}
+            ></PageHeader>
           </div>
 
           <div className="bg-white rounded-md p-6 shadow-md">

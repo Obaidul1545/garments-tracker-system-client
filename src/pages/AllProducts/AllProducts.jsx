@@ -6,6 +6,7 @@ import ProductsCard from './ProductsCard';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { Helmet } from 'react-helmet';
+import PageHeader from '../../components/PageHeader';
 
 const AllProducts = () => {
   const [search, setSearch] = useState('');
@@ -38,13 +39,14 @@ const AllProducts = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-12"
           >
-            <h1 className="text-[#0F172A] text-3xl font-semibold mb-4">
-              All Products
-            </h1>
-            <p className="text-[#475569] max-w-2xl mx-auto mb-8">
-              Browse our complete collection of premium garments manufactured
-              with precision and care
-            </p>
+            <PageHeader
+              title={'All Products'}
+              highlight={'Products'}
+              subtitle={
+                'Browse our complete collection of premium garments manufactured with precision and care'
+              }
+              className="mb-8"
+            ></PageHeader>
 
             {/* Search */}
             <div className="max-w-xl mx-auto">
@@ -55,7 +57,7 @@ const AllProducts = () => {
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search products by name, category..."
-                  className="w-full pl-12 pr-4 py-3 bg-white border border-gray-300 rounded-md focus:ring-2 focus:ring-[#0D9488] focus:border-transparent outline-none transition-all"
+                  className="w-full pl-12 pr-4 py-3 bg-white border border-[#0D9488] rounded-md focus:ring-2 focus:ring-[#0D9488] focus:border-transparent outline-none transition-all"
                 />
               </div>
             </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ShoppingBag, Package, Factory, Truck } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 const HowItWorks = () => {
   const steps = [
@@ -38,12 +39,13 @@ const HowItWorks = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-[#0F172A] text-3xl font-semibold mb-4">
-              How It Works
-            </h2>
-            <p className="text-[#475569] max-w-2xl mx-auto">
-              Simple steps to get your garments from production to delivery
-            </p>
+            <PageHeader
+              title={'How It Works'}
+              highlight={'It Works'}
+              subtitle={
+                'Simple steps to get your garments from production to delivery'
+              }
+            ></PageHeader>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

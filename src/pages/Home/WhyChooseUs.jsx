@@ -14,7 +14,7 @@ const WhyChooseUs = () => {
               viewport={{ once: true }}
             >
               <h2 className="text-[#0F172A] text-3xl font-semibold mb-14">
-                Why Choose Us
+                Why <span className="text-teal-600">Choose</span> Us
               </h2>
               <div className="space-y-4">
                 <div className="flex items-start gap-4">

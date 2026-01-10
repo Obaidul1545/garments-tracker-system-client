@@ -30,7 +30,8 @@ import UpdateProduct from '../pages/Dashboard/Manager/ManageProducts/UpdateProdu
 import TrackingProduct from '../pages/OtherPages/TrackingProduct';
 import OrderDetails from '../pages/Dashboard/Admin/AllOrders/OrderDetails';
 import DashboardHome from '../pages/Dashboard/DashboardHome/DashboardHome';
-import PrivacyPolicy from '../pages/ProductDetails/PrivacyPolicy';
+import PrivacyPolicy from '../pages/OtherPages/PrivacyPolicy';
+import TermsOfService from '../pages/OtherPages/TermsOfService';
 
 export const router = createBrowserRouter([
   {
@@ -73,6 +74,10 @@ export const router = createBrowserRouter([
       {
         path: 'privacy-policy',
         element: <PrivacyPolicy></PrivacyPolicy>,
+      },
+      {
+        path: 'TermsOfService',
+        element: <TermsOfService></TermsOfService>,
       },
     ],
   },

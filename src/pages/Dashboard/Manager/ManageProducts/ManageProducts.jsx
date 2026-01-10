@@ -6,6 +6,7 @@ import LoadingSpinner from '../../../../components/LoadingSpinner';
 import { Link, useLocation } from 'react-router';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
+import PageHeader from '../../../../components/PageHeader';
 
 const ManageProducts = () => {
   const [search, setSearch] = useState('');
@@ -77,10 +78,11 @@ const ManageProducts = () => {
       <div className="space-y-6 px-3 sm:px-4 lg:px-4 py-5">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-[#0F172A] text-3xl font-semibold mb-2">
-              Manage Products
-            </h1>
-            <p className="text-[#475569]">View and manage your products</p>
+            <PageHeader
+              title={'Manage Products'}
+              highlight={'Manage'}
+              subtitle={'View and manage your products'}
+            ></PageHeader>
           </div>
           <Link
             to="/dashboard/add-product"

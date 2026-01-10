@@ -6,6 +6,7 @@ import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import { Link } from 'react-router';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
 import { Helmet } from 'react-helmet';
+import PageHeader from '../../../../components/PageHeader';
 
 const BuyerDashboard = () => {
   // const myOrders = mockOrders?.slice(0, 3);
@@ -58,12 +59,11 @@ const BuyerDashboard = () => {
       </Helmet>
       <div className="space-y-8 min-h-screen container mx-auto my-8 px-2 md:px-5">
         <div className="mb-10 mt-5">
-          <h1 className="text-[#0F172A] text-2xl font-semibold mb-2">
-            My Dashboard
-          </h1>
-          <p className="text-[#475569]">
-            Track your orders and manage your account
-          </p>
+          <PageHeader
+            title={'My Dashboard'}
+            highlight={'My'}
+            subtitle={'Track your orders and manage your account'}
+          ></PageHeader>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

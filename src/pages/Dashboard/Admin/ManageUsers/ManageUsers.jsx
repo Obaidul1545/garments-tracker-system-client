@@ -6,6 +6,7 @@ import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
 import { FaUserEdit } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import PageHeader from '../../../../components/PageHeader';
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -83,11 +84,12 @@ const ManageUsers = () => {
     <div className="container mx-auto">
       <div className="space-y-6 px-4 sm:px-6 lg:px-8 py-5">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div>
-            <h1 className="text-[#0F172A] text-3xl font-semibold mb-2">
-              Manage Users
-            </h1>
-            <p className="text-[#475569]">View and manage all platform users</p>
+          <div className="w-full">
+            <PageHeader
+              title={'Manage Users'}
+              highlight={'Users'}
+              subtitle={'View and manage all platform users'}
+            ></PageHeader>
           </div>
         </div>
 

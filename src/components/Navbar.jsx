@@ -125,6 +125,12 @@ const Navbar = () => {
           >
             Privacy policy
           </NavLink>
+          <NavLink
+            to="/TermsOfService"
+            className="text-[#475569] hover:text-[#0D9488] transition-colors"
+          >
+            Terms Of Service
+          </NavLink>
           <Link
             to="/auth/login"
             className="text-[#475569] hover:text-[#0D9488] transition-colors"

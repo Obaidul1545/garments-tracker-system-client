@@ -8,6 +8,7 @@ import { BsEye } from 'react-icons/bs';
 import useAuth from '../../../hooks/useAuth';
 import { toast } from 'react-toastify';
 import { Helmet } from 'react-helmet';
+import PageHeader from '../../../components/PageHeader';
 
 const demoAccounts = {
   admin: {
@@ -66,12 +67,12 @@ const Login = () => {
         <div className=" flex items-center justify-center p-4">
           <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
             {/* Title */}
-            <h2 className="text-2xl font-semibold text-center text-slate-900">
-              Welcome Back
-            </h2>
-            <p className="text-center text-slate-500 mb-6">
-              Sign in to your account to continue
-            </p>
+            <PageHeader
+              title={'Welcome Back'}
+              highlight={'Welcome'}
+              subtitle={'Sign in to your account to continue'}
+              className="mb-5"
+            ></PageHeader>
 
             {/* Form Start */}
             <form onSubmit={handleSubmit(handleLogin)} className="space-y-4">

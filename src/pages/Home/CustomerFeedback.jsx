@@ -6,6 +6,7 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import PageHeader from '../../components/PageHeader';
 
 const CustomerFeedback = () => {
   const feedbacks = [
@@ -92,12 +93,11 @@ const CustomerFeedback = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-[#0F172A] font-semibold text-3xl mb-4">
-              Customer Feedback
-            </h2>
-            <p className="text-[#475569] max-w-2xl mx-auto">
-              Hear what our clients say about their experience
-            </p>
+            <PageHeader
+              title={'Customer Feedback'}
+              highlight={'Feedback'}
+              subtitle={'Hear what our clients say about their experience'}
+            ></PageHeader>
           </motion.div>
 
           <div>

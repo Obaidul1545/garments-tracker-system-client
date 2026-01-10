@@ -104,12 +104,12 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to={'/TermsOfService'}
                     className="text-gray-400 hover:text-[#2DD4BF] transition-colors"
                   >
                     Terms of Service
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

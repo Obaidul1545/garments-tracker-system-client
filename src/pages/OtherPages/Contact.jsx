@@ -2,6 +2,7 @@ import React from 'react';
 import { Phone, Mail, MapPin, Send } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
+import PageHeader from '../../components/PageHeader';
 
 const Contact = () => {
   return (
@@ -11,13 +12,13 @@ const Contact = () => {
       </Helmet>
       <div className="container mx-auto">
         <div className="text-center my-10">
-          <h1 className="text-3xl font-semibold mb-4">
-            Contact <span className="text-teal-700">Us</span>
-          </h1>
-          <p className="text-gray-500 max-w-2xl mx-auto">
-            Have questions? We’re always here to help. Send us a message and
-            we’ll get back to you shortly.
-          </p>
+          <PageHeader
+            title={'Contact Us'}
+            highlight={'Us'}
+            subtitle={
+              'Have questions? We’re always here to help. Send us a message and we’ll get back to you shortly.'
+            }
+          ></PageHeader>
         </div>
         <div className="flex flex-col md:flex-row gap-10 text-gray-800 py-5 px-4 mb-30">
           <motion.div

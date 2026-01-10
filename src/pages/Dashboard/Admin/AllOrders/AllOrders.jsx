@@ -5,6 +5,7 @@ import { Eye, Search } from 'lucide-react';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import { Link } from 'react-router';
+import PageHeader from '../../../../components/PageHeader';
 
 const AllOrders = () => {
   const [search, setSearch] = useState('');
@@ -24,12 +25,11 @@ const AllOrders = () => {
     <div className="container mx-auto">
       <div className="space-y-6 px-3 sm:px-4 lg:px-4 py-5">
         <div>
-          <h1 className="text-[#0F172A] text-3xl font-semibold mb-2">
-            All Orders
-          </h1>
-          <p className="text-[#475569]">
-            Monitor and manage all platform orders
-          </p>
+          <PageHeader
+            title={'All Orders'}
+            highlight={'All'}
+            subtitle={'Monitor and manage all platform orders'}
+          ></PageHeader>
         </div>
 
         <div className="bg-white rounded-md p-6 shadow-md">

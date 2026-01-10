@@ -8,6 +8,7 @@ import axios from 'axios';
 import useAuth from '../../../../hooks/useAuth';
 import { useNavigate } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
+import PageHeader from '../../../../components/PageHeader';
 
 const AddProduct = () => {
   const { user } = useAuth();
@@ -84,10 +85,11 @@ const AddProduct = () => {
           className="space-y-6"
         >
           <div>
-            <h1 className="text-[#0F172A] text-3xl font-semibold mb-2">
-              Add New Product
-            </h1>
-            <p className="text-[#475569]">Create a new product listing</p>
+            <PageHeader
+              title={'Add New Product'}
+              highlight={'Add New'}
+              subtitle={'Create a new product listing'}
+            ></PageHeader>
           </div>
 
           <form

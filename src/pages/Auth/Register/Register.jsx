@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { Helmet } from 'react-helmet';
+import PageHeader from '../../../components/PageHeader';
 
 const Register = () => {
   const axiosSecure = useAxiosSecure();
@@ -81,12 +82,11 @@ const Register = () => {
           <div className="bg-white rounded-3xl shadow-xl p-8 lg:p-10">
             {/* Header */}
             <div className="text-center mb-8">
-              <h2 className="text-[#0F172A] mb-2 text-2xl font-semibold">
-                Create Account
-              </h2>
-              <p className="text-[#475569]">
-                Join our garment tracking platform
-              </p>
+              <PageHeader
+                title={'Create Account'}
+                highlight={'Create'}
+                subtitle={'Join our garment tracking platform'}
+              ></PageHeader>
             </div>
 
             {/* Form */}

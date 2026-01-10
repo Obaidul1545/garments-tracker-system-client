@@ -8,6 +8,7 @@ import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
 import { Link, useLocation, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
+import PageHeader from '../../../../components/PageHeader';
 
 const AllProductsManage = () => {
   const [search, setSearch] = useState('');
@@ -95,10 +96,11 @@ const AllProductsManage = () => {
     <div className="container mx-auto">
       <div className="space-y-6 px-3 sm:px-4 lg:px-4 py-5">
         <div>
-          <h1 className="text-[#0F172A] text-3xl font-semibold mb-2">
-            All Products
-          </h1>
-          <p className="text-[#475569]">Manage all products in the system</p>
+          <PageHeader
+            title={'All Products'}
+            highlight={'All'}
+            subtitle={'Manage all products in the system'}
+          ></PageHeader>
         </div>
 
         <div className="bg-white rounded-2xl p-6 shadow-md">

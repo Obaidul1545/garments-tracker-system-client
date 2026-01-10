@@ -5,6 +5,7 @@ import ProductsCard from '../AllProducts/ProductsCard';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { Link } from 'react-router';
+import PageHeader from '../../components/PageHeader';
 
 const LatestProduct = () => {
   const axiosSecure = useAxiosSecure();
@@ -25,13 +26,13 @@ const LatestProduct = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-[#0F172A] font-semibold text-3xl mb-4">
-            Our Products
-          </h2>
-          <p className="text-[#475569] max-w-2xl mx-auto">
-            Discover our premium collection of garments manufactured with
-            precision and care
-          </p>
+          <PageHeader
+            title={'Our Products'}
+            highlight={'Products'}
+            subtitle={
+              'Discover our premium collection of garments manufactured with precision and care'
+            }
+          ></PageHeader>
         </motion.div>
 
         {isLoading ? (

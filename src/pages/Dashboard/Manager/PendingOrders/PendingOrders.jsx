@@ -8,6 +8,7 @@ import { useRef, useState } from 'react';
 import useAuth from '../../../../hooks/useAuth';
 import { toast } from 'react-toastify';
 import { Helmet } from 'react-helmet';
+import PageHeader from '../../../../components/PageHeader';
 
 const PendingOrders = () => {
   const { user } = useAuth();
@@ -83,10 +84,11 @@ const PendingOrders = () => {
       </Helmet>
       <div className="space-y-6 px-3 sm:px-4 lg:px-4 py-5">
         <div>
-          <h1 className="text-[#0F172A] text-3xl font-semibold mb-2">
-            Pending Orders
-          </h1>
-          <p className="text-[#475569]">Review and approve customer orders</p>
+          <PageHeader
+            title={'Pending Orders'}
+            highlight={'Pending'}
+            subtitle={'Review and approve customer orders'}
+          ></PageHeader>
         </div>
 
         {isLoading ? (

@@ -7,6 +7,7 @@ import { useRef, useState } from 'react';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router';
 import { Helmet } from 'react-helmet';
+import PageHeader from '../../../../components/PageHeader';
 
 const ApprovedOrders = () => {
   const axiosSecure = useAxiosSecure();
@@ -81,12 +82,13 @@ const ApprovedOrders = () => {
       </Helmet>
       <div className="space-y-6 px-3 sm:px-4 lg:px-4 py-5">
         <div>
-          <h1 className="text-[#0F172A] text-3xl font-semibold mb-2">
-            Approved Orders
-          </h1>
-          <p className="text-[#475569]">
-            Track approved orders and proceed to the next production stage
-          </p>
+          <PageHeader
+            title={'Approved Orders'}
+            highlight={'Approved'}
+            subtitle={
+              'Track approved orders and proceed to the next production stage'
+            }
+          ></PageHeader>
         </div>
 
         {isLoading ? (

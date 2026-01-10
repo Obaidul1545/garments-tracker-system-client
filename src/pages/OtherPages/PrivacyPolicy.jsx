@@ -11,6 +11,7 @@ import {
   Users,
   Mail,
 } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 const PrivacyPolicy = () => {
   return (
@@ -26,20 +27,13 @@ const PrivacyPolicy = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <div className="flex justify-center mb-4">
-            <Shield className="w-16 h-16 text-teal-700" />
-          </div>
-          <h1 className="text-4xl font-bold mb-4">
-            Privacy <span className="text-teal-700">Policy</span>
-          </h1>
-          <p className="text-gray-600 max-w-3xl mx-auto text-lg">
-            Last Updated:{' '}
-            {new Date().toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
-          </p>
+          <PageHeader
+            title="Privacy Policy"
+            highlight="Policy"
+            subtitle="Learn how we protect your data and respect your privacy."
+            icon={Shield}
+            iconSize={70}
+          ></PageHeader>
         </motion.div>
 
         {/* Main Content */}

@@ -26,6 +26,7 @@ import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
 import { Link } from 'react-router';
+import PageHeader from '../../../../components/PageHeader';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
@@ -78,10 +79,11 @@ const AdminDashboard = () => {
   return (
     <div className="min-h-screen container mx-auto my-8 px-2 md:px-5">
       <div className="mb-10">
-        <h1 className="text-[#0F172A] text-2xl font-semibold mb-2">
-          Admin Dashboard
-        </h1>
-        <p className="text-[#475569]">Overview of your platform performance</p>
+        <PageHeader
+          title={'Admin Dashboard'}
+          highlight={'Admin'}
+          subtitle={'Overview of your platform performance'}
+        ></PageHeader>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 my-10">

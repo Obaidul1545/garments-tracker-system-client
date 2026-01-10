@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle, Users, Factory, Globe } from 'lucide-react';
 import { Link } from 'react-router';
 import { Helmet } from 'react-helmet';
+import PageHeader from '../../components/PageHeader';
 
 const AboutUs = () => {
   return (
@@ -18,15 +19,13 @@ const AboutUs = () => {
             viewport={{ once: true }}
             className="text-center max-w-3xl mx-auto mb-16"
           >
-            <h1 className="text-3xl font-semibold text-[#0F172A] mb-4">
-              About <span className="text-[#0F766E]">Our Company</span>
-            </h1>
-            <p className="text-[#475569] leading-relaxed">
-              We are a modern garment production tracking & order management
-              system built to bring transparency, speed, and efficiency to the
-              apparel industry. Our mission is to connect buyers, factories, and
-              production teams with real-time visibility and seamless workflow.
-            </p>
+            <PageHeader
+              title={'About Our Company'}
+              highlight={'Our Company'}
+              subtitle={
+                'We are a modern garment production tracking & order management system built to bring transparency, speed, and efficiency to the apparel industry. Our mission is to connect buyers, factories, and production teams with real-time visibility and seamless workflow.'
+              }
+            ></PageHeader>
           </motion.div>
 
           {/* Mission + Vision */}

@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { AlertCircle, LogOut } from 'lucide-react';
 import { toast } from 'react-toastify';
+import PageHeader from '../../components/PageHeader';
 
 const Profile = () => {
   const { user, setLoading, logOutUser } = useAuth();
@@ -44,12 +45,11 @@ const Profile = () => {
           className="space-y-6"
         >
           <div>
-            <h1 className="text-[#0F172A] text-4xl font-semibold mb-2">
-              My Profile
-            </h1>
-            <p className="text-[#475569]">
-              View and manage your account information
-            </p>
+            <PageHeader
+              title={'My Profile'}
+              highlight={'Profile'}
+              subtitle={'View and manage your account information'}
+            ></PageHeader>
           </div>
 
           {/* Profile Card */}
