@@ -5,6 +5,7 @@ import useAuth from '../../../../hooks/useAuth';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import { Link } from 'react-router';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
+import { Helmet } from 'react-helmet';
 
 const BuyerDashboard = () => {
   // const myOrders = mockOrders?.slice(0, 3);
@@ -52,6 +53,9 @@ const BuyerDashboard = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Buyer Dashboard - Garments Tracker</title>
+      </Helmet>
       <div className="space-y-8 min-h-screen container mx-auto my-8 px-2 md:px-5">
         <div className="mb-10 mt-5">
           <h1 className="text-[#0F172A] text-2xl font-semibold mb-2">

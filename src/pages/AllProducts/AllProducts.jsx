@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import ProductsCard from './ProductsCard';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { Helmet } from 'react-helmet';
 
 const AllProducts = () => {
   const [search, setSearch] = useState('');
@@ -27,6 +28,9 @@ const AllProducts = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>All Products - Garments Tracker</title>
+      </Helmet>
       <div className=" py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-2">
           <motion.div

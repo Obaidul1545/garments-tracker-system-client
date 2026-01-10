@@ -9,6 +9,7 @@ import { useForm, useWatch } from 'react-hook-form';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet';
 
 const BookingOrder = () => {
   const { user } = useAuth();
@@ -117,6 +118,9 @@ const BookingOrder = () => {
   }
   return (
     <div>
+      <Helmet>
+        <title>Booking Order - Garments Tracker</title>
+      </Helmet>
       <div className=" bg-[#E2E8F0] my-5">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-2">
           <Link

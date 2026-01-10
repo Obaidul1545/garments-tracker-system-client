@@ -8,6 +8,7 @@ import useAuth from '../../../hooks/useAuth';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import { Helmet } from 'react-helmet';
 
 const Register = () => {
   const axiosSecure = useAxiosSecure();
@@ -72,6 +73,9 @@ const Register = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Register- Garments Tracker</title>
+      </Helmet>
       <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl w-full">
           <div className="bg-white rounded-3xl shadow-xl p-8 lg:p-10">

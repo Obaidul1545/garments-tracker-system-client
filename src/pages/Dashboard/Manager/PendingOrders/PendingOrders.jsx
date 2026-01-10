@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { useRef, useState } from 'react';
 import useAuth from '../../../../hooks/useAuth';
 import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet';
 
 const PendingOrders = () => {
   const { user } = useAuth();
@@ -77,6 +78,9 @@ const PendingOrders = () => {
 
   return (
     <div className="container mx-auto">
+      <Helmet>
+        <title>Pending Orders - Garments Tracker</title>
+      </Helmet>
       <div className="space-y-6 px-3 sm:px-4 lg:px-4 py-5">
         <div>
           <h1 className="text-[#0F172A] text-3xl font-semibold mb-2">

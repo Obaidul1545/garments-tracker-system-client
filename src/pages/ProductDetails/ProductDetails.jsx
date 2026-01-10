@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import useAuth from '../../hooks/useAuth';
+import { Helmet } from 'react-helmet';
 
 const ProductDetails = () => {
   const { user } = useAuth();
@@ -39,6 +40,9 @@ const ProductDetails = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Product details - Garments Tracker</title>
+      </Helmet>
       <div className=" bg-[#E2E8F0] py-5">
         <div className="container mx-auto px-4 sm:px-6 lg:px-2">
           <Link
